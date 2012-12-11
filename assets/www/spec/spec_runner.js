@@ -17,7 +17,7 @@ require.config({
     jasmine_junit_reporter:'../../spec/lib/jasmine-reporters/jasmine.junit_reporter',
     spec:'../../spec',
     fixtures:'../../spec/fixtures',
-    // Paths to non modules
+    // Paths to non modules, TODO: convert to AMD
     pm:'../../sukatsearch/js/models/personmodel',
     ssv:'../../sukatsearch/js/views/searchview'
   },
@@ -53,6 +53,7 @@ require.config({
     jasmine_junit_reporter:{
       deps:['jasmine']
     },
+    // TODO: Remove when converted to AMD
     pm:{
       deps:['backbone']
     },
@@ -73,6 +74,7 @@ require([
   'console_runner',
   'jasmine_junit_reporter',
   '../../js/index',
+  // TODO: Remove when converted to AMD
   'pm',
   'ssv'
 ], function (_, $, jasmine) {
