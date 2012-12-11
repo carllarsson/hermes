@@ -43,15 +43,30 @@ describe('Person collection', function () {
 
   describe('fetching a collection of persons', function () {
     beforeEach(function () {
-      this.persons = new Persons();
-      this.fixture = this.fixtures.Persons.valid;
+      var self = this;
+      var done = false;
 
-      this.server = sinon.fakeServer.create();
-      this.server.respondWith(
-          "GET",
-          this.persons.url(),
-          this.validResponse(this.fixture)
-      );
+      require([
+        'fixtures/persons'
+      ], function (Fixtures) {
+        self.fixture = Fixtures.valid;
+        done = true;
+      });
+
+      waitsFor(function () {
+        return done;
+      }, "Create Fixtures");
+
+      runs(function () {
+        this.persons = new Persons();
+
+        this.server = sinon.fakeServer.create();
+        this.server.respondWith(
+            "GET",
+            this.persons.url(),
+            this.validResponse(this.fixture)
+        );
+      });
     });
 
     afterEach(function () {
@@ -93,7 +108,7 @@ describe('Search view', function () {
     this.origBody = $('body').html;
     $('body').append("<div id='search-page'><div id='search_view'></div></div>");
 
-    this.view = new SukatSearchView({el: $('#search_view')});
+    this.view = new SukatSearchView({el:$('#search_view')});
   });
 
   afterEach(function () {

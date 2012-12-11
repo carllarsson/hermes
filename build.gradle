@@ -88,7 +88,7 @@ task test(type: Exec) {
     phantomjs = "which phantomjs".execute().text.trim()
 
   def testExecScript = file('assets/www/spec/lib/phantom-jasmine/run_jasmine_test.coffee')
-  def testRunner = file('assets/www/phantom-runner.html')
+  def testRunner = file('assets/www/spec.html')
 
   commandLine phantomjs, testExecScript.absolutePath, testRunner.absolutePath
 }
@@ -98,7 +98,7 @@ task testReports(type: Exec) {
     phantomjs = "which phantomjs".execute().text.trim()
 
   def testExecScript = file('assets/www/spec/lib/jasmine-reporters/phantomjs-testrunner.js')
-  def testRunner = file('assets/www/phantom-runner.html')
+  def testRunner = file('assets/www/spec.html')
 
   commandLine phantomjs, testExecScript.absolutePath, testRunner.absolutePath
 }
@@ -126,7 +126,6 @@ task buildTar(type: Tar) {
   includes['www']
   excludes = [
           'www/spec.html',
-          'www/phantom-runner.html',
           'www/spec',
           '**/cordova*.js']
   from new File("assets/")
