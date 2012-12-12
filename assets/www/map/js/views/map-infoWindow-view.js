@@ -9,8 +9,9 @@
 define([
   'jquery',
   'underscore',
-  'backbone'
-], function ($, _, Backbone) {
+  'backbone',
+  'text!map/tpl/info_window.html'
+], function ($, _, Backbone, InfoWindowTemplate) {
   var InfoWindow = Backbone.View.extend(
       /** @lends InfoWindow */
       {
@@ -60,7 +61,7 @@ define([
 
           var displayMode = model.get('directionAware') ? "display:inline" : "display:none";
           var variables = { itemName:model.get("name"), itemText:model.get("text"), displayMode:displayMode };
-          var template = _.template($("#infoWindow_template").html(), variables);
+          var template = _.template(InfoWindowTemplate, variables);
 
           this.infoWindow.setContent(template);
           if (latlng) {

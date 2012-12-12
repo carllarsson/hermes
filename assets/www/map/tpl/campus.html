@@ -1,0 +1,6 @@
+<select name="campus" data-native-menu="false" id="campus">
+  <option value=""><%= defaultOptionName %></option>
+  <% _(options).each(function(item) { %>
+  <option value="<%= item.id %>"><%= item.name %></option>
+  <% }); %>
+</select>

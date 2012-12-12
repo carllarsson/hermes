@@ -11,8 +11,11 @@ define([
   'backbone',
   'models/campusmodel',
   'views/map-view',
+  'text!map/tpl/campus.html',
+  'text!map/tpl/location.html',
+  'text!map/tpl/footer.html',
   'jquery_mobile'
-], function (_, Backbone, Campuses, MapView) {
+], function (_, Backbone, Campuses, MapView, CampusTemplate, LocationTemplate, FooterTemplate) {
   var AppView = Backbone.View.extend(
       /** @lends AppView */
       {
@@ -43,7 +46,7 @@ define([
          * Render the app module.
          */
         render:function () {
-          var footerTpl = _.template($("#page-map-footer_template").html());
+          var footerTpl = _.template(FooterTemplate);
           this.$el.append(footerTpl);
 
           this.togglePoiType();
@@ -62,7 +65,7 @@ define([
             "Hörsal"
           ];
 
-          var template = _.template($("#location_template").html(), {
+          var template = _.template(LocationTemplate, {
             defaultOptionName:i18n.t("map.general.filter"),
             options:filters
           });
@@ -93,7 +96,7 @@ define([
          * Render campus select.
          */
         renderCampuses:function () {
-          var template = _.template($("#campus_template").html(), {
+          var template = _.template(CampusTemplate, {
             defaultOptionName:i18n.t("map.general.campus"),
             options:this.campuses.toJSON()
           });

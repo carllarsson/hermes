@@ -8,8 +8,9 @@
 define([
   'jquery',
   'underscore',
-  'backbone'
-], function ($, _, Backbone) {
+  'backbone',
+  'text!map/tpl/filter_button.html'
+], function ($, _, Backbone, FilterButtonTemplate) {
   var SearchView = Backbone.View.extend(
       /** @lends SearchView */
       {
@@ -57,7 +58,7 @@ define([
 
           // Add a filter button for the campus (if one is selected)
           if (this.campus) {
-            var template = _.template($("#search-popup_filter_button_template").html(), { id:"search-popup_campus_button", name:this.campus });
+            var template = _.template(FilterButtonTemplate, { id:"search-popup_campus_button", name:this.campus });
             filtersContainer.append(template);
           }
 
@@ -72,7 +73,7 @@ define([
             var typeId = "search-popup_type_button_" + type;
             typeIds.push(typeId);
 
-            var template = _.template($("#search-popup_filter_button_template").html(), { id:typeId, name:type });
+            var template = _.template(FilterButtonTemplate, { id:typeId, name:type });
             filtersContainer.append(template);
           });
 

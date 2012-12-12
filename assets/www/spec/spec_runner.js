@@ -3,6 +3,7 @@ require.config({
   //urlArgs:'cb=' + Math.random(),
   paths:{
     async:'../../js/lib/requirejs-plugins/async',
+    text:'../../js/lib/requirejs-plugins/text',
     jquery:'../../js/lib/jquery-1.8.2.min',
     jquery_mobile:'../../js/lib/jquery.mobile-1.2.0.min',
     jquery_mobile_config:'jquery.mobile-config',
