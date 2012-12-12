@@ -8,11 +8,10 @@
   <link rel="stylesheet" href="css/jquery.mobile-1.1.1.min.css"/>
 
   <script src="cordova-2.2.0.js"></script>
-  <script src="js/lib/jquery-1.8.2.min.js"></script>
-  <script src="js/lib/jquery.mobile-1.1.1.min.js"></script>
-
   <script type="text/javascript" charset="utf-8" src="childbrowser.js"></script>
-  <script src="js/su-app-global.js"></script>
+
+  <script src="js/lib/require-2.1.2.min.js" data-main="js/app.js"></script>
+
 
   <style>
     .ui-content {
@@ -57,16 +56,16 @@
         </div>
 
         <div class="ui-block-c">
-          <a onclick="ontap=openChildBrowser('https://mondo.su.se/portal/pda',null)"><img
+          <a id="mondo-link" href="https://mondo.su.se/portal/pda"><img
                   src="img/icons/mondo_button.png"></a>
         </div>
 
         <div class="ui-block-d">
-          <a onclick="ontap=openChildBrowser('http://www.su.se',null)"><img src="img/icons/Web.png"></a>
+          <a id="su-link" href="http://www.su.se"><img src="img/icons/Web.png"></a>
         </div>
 
         <div class="ui-block-a">
-          <a onclick="ontap=openChildBrowser('http://www.sub.su.se/mobil',null)"><img src="img/icons/Library.png"></a>
+          <a id="sub-link" href="http://www.sub.su.se/mobil"><img src="img/icons/Library.png"></a>
         </div>
       </div>
     </div>
