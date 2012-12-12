@@ -11,7 +11,7 @@ import org.apache.http.HttpResponse
 import org.apache.http.util.EntityUtils
 import org.apache.tools.ant.filters.*
 
-version = "0.0.3"
+version = "0.0.4"
 group = "se.su.it.handheld.app"
 archivesBaseName = "hermes"
 description = """Prototype of Stockholm University mobile app."""
