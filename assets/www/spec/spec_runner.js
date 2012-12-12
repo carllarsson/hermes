@@ -25,6 +25,7 @@ require.config({
     // Tests & stuff
     spec:'../../spec',
     fixtures:'../../spec/fixtures',
+
     // Paths to non modules, TODO: convert to AMD
     pm:'../../sukatsearch/js/models/personmodel',
     ssv:'../../sukatsearch/js/views/searchview'
