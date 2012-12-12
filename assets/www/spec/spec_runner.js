@@ -1,6 +1,6 @@
 require.config({
   baseUrl:"map/js",
-  urlArgs:'cb=' + Math.random(),
+  //urlArgs:'cb=' + Math.random(),
   paths:{
     async:'../../js/lib/requirejs-plugins/async',
     jquery:'../../js/lib/jquery-1.8.2.min',
@@ -76,7 +76,8 @@ require([
   '../../js/index',
   // TODO: Remove when converted to AMD
   'pm',
-  'ssv'
+  'ssv',
+  '../../map/js/views/app-view'
 ], function (_, $, jasmine) {
 
   var jasmineEnv = jasmine.getEnv();
