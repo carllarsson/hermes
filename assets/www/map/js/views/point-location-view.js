@@ -9,7 +9,7 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'views/generic-location-view'
+  'map/js/views/generic-location-view'
 ], function ($, _, Backbone, GenericLocationView) {
   var PointLocationView = GenericLocationView.extend(
       /** @lends PointLocationView */

@@ -4,7 +4,7 @@ describe('Location model', function () {
       var self = this;
       var done = false;
 
-      require(['models/locationmodel'], function (Location) {
+      require(['map/js/models/locationmodel'], function (Location) {
         self.location = new Location.Model();
         done = true;
       });
@@ -56,7 +56,7 @@ describe('Location model', function () {
       var self = this;
       var done = false;
 
-      require(['models/locationmodel'], function (Location) {
+      require(['map/js/models/locationmodel'], function (Location) {
         self.location = new Location.Model({
           campus:'campus',
           type:'type',
@@ -89,7 +89,7 @@ describe('Locations collection', function () {
       var self = this;
       var done = false;
 
-      require(['models/locationmodel'], function (Location) {
+      require(['map/js/models/locationmodel'], function (Location) {
         self.locations = new Location.Collection();
         self.locationModel = Location.Model;
         done = true;
@@ -115,7 +115,7 @@ describe('Locations collection', function () {
       var done = false;
 
       require([
-        'models/locationmodel',
+        'map/js/models/locationmodel',
         'fixtures/locations'
       ], function (Location, Fixtures) {
         self.locations = new Location.Collection();
@@ -177,7 +177,7 @@ describe('Locations collection', function () {
       var done = false;
 
       require([
-        'models/locationmodel',
+        'map/js/models/locationmodel',
         'fixtures/locations'
       ], function (Location, Fixtures) {
         self.locations = new Location.Collection();
@@ -237,7 +237,7 @@ describe('Map model', function () {
       var self = this;
       var done = false;
 
-      require(['models/map-model'], function (MapModel) {
+      require(['map/js/models/map-model'], function (MapModel) {
         self.model = new MapModel();
         done = true;
       });
@@ -268,7 +268,7 @@ describe('App view', function () {
     this.origBody = $('body').html;
     $('body').append("<div id='page-map'><div id='map_canvas'></div></div>");
 
-    require(['views/app-view'], function (AppView) {
+    require(['map/js/views/app-view'], function (AppView) {
       self.view = new AppView({el:$('#page-map')});
       done = true;
     });

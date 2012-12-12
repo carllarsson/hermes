@@ -1,34 +1,36 @@
 require.config({
-  baseUrl:"map/js",
+  baseUrl:"./",
   //urlArgs:'cb=' + Math.random(),
   paths:{
     // Require plugins
-    async:'../../js/lib/requirejs-plugins/async',
-    text:'../../js/lib/requirejs-plugins/text',
+    async:'js/lib/requirejs-plugins/async',
+    text:'js/lib/requirejs-plugins/text',
 
     // Dependencies
-    jquery:'../../js/lib/jquery-1.8.2.min',
-    jquery_mobile:'../../js/lib/jquery.mobile-1.2.0.min',
-    jquery_mobile_config:'jquery.mobile-config',
-    underscore:'../../js/lib/underscore-1.3.3-min',
-    backbone:'../../js/lib/backbone-0.9.2-min',
-    i18n:'../../js/lib/i18next-1.5.8.min',
+    jquery:'js/lib/jquery-1.8.2.min',
+    jquery_mobile:'js/lib/jquery.mobile-1.2.0.min',
+    jquery_mobile_config:'map/js/jquery.mobile-config',
+    underscore:'js/lib/underscore-1.3.3-min',
+    backbone:'js/lib/backbone-0.9.2-min',
+    i18n:'js/lib/i18next-1.5.8.min',
 
     // Test framework
-    jasmine:'../../spec/lib/jasmine-1.2.0/jasmine',
-    'jasmine-html':'../../spec/lib/jasmine-1.2.0/jasmine-html',
-    sinon:'../../spec/lib/sinon-1.5.2',
-    helper:'../../spec/helper',
-    console_runner:'../../spec/lib/phantom-jasmine/console-runner',
-    jasmine_junit_reporter:'../../spec/lib/jasmine-reporters/jasmine.junit_reporter',
+    jasmine:'spec/lib/jasmine-1.2.0/jasmine',
+    'jasmine-html':'spec/lib/jasmine-1.2.0/jasmine-html',
+    sinon:'spec/lib/sinon-1.5.2',
+    helper:'spec/helper',
+    console_runner:'spec/lib/phantom-jasmine/console-runner',
+    jasmine_junit_reporter:'spec/lib/jasmine-reporters/jasmine.junit_reporter',
 
     // Tests & stuff
-    spec:'../../spec',
-    fixtures:'../../spec/fixtures',
+    spec:'spec',
+    fixtures:'spec/fixtures',
+
+    map:'map',
 
     // Paths to non modules, TODO: convert to AMD
-    pm:'../../sukatsearch/js/models/personmodel',
-    ssv:'../../sukatsearch/js/views/searchview'
+    pm:'sukatsearch/js/models/personmodel',
+    ssv:'sukatsearch/js/views/searchview'
   },
   priority:['jquery', 'jquery_mobile', 'jquery_mobile_config', 'underscore', 'backbone', 'i18n'],
   shim:{
@@ -82,11 +84,11 @@ require([
   'helper',
   'console_runner',
   'jasmine_junit_reporter',
-  '../../js/index',
+  'js/index',
   // TODO: Remove when converted to AMD
   'pm',
   'ssv',
-  '../../map/js/views/app-view'
+  'map/js/views/app-view'
 ], function (_, $, jasmine) {
 
   var jasmineEnv = jasmine.getEnv();

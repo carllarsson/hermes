@@ -10,12 +10,12 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'models/map-model',
-  'models/locationmodel',
-  'views/map-infoWindow-view',
-  'views/point-location-view',
-  'views/line-location-view',
-  'views/search-view',
+  'map/js/models/map-model',
+  'map/js/models/locationmodel',
+  'map/js/views/map-infoWindow-view',
+  'map/js/views/point-location-view',
+  'map/js/views/line-location-view',
+  'map/js/views/search-view',
   'async!http://maps.google.com/maps/api/js?v=3&sensor=false'
 ], function ($, _, Backbone, MapModel, Location, InfoWindow, PointLocationView, LineLocationView, SearchView) {
   var MapView = Backbone.View.extend(

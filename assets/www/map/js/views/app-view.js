@@ -9,8 +9,8 @@
 define([
   'underscore',
   'backbone',
-  'models/campusmodel',
-  'views/map-view',
+  'map/js/models/campusmodel',
+  'map/js/views/map-view',
   'text!map/tpl/campus.html',
   'text!map/tpl/location.html',
   'text!map/tpl/footer.html',

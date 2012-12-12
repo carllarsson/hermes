@@ -39,7 +39,7 @@ require([
   'jquery',
   'backbone',
   'i18n',
-  'views/app-view'
+  'map/js/views/app-view'
 ], function ($, Backbone, i18n, AppView) {
 
   // Get locale from phonegap
