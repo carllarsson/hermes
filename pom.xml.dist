@@ -17,5 +17,6 @@
     <sonar.javascript.jstestdriver.reportsfolder>build/reports/coverage/</sonar.javascript.jstestdriver.reportsfolder>
     <sonar.surefire.reportsPath>build/reports/tests/</sonar.surefire.reportsPath>
     <sonar.exclusions>**/cordova*.js,**/childbrowser.js,**/lib/**/*.js</sonar.exclusions>
+    <sonar.links.scm>git://git.it.su.se/git/hermes.git</sonar.links.scm>
   </properties>
 </project>
