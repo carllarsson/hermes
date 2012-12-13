@@ -84,7 +84,8 @@ require([
   'console_runner',
   'jasmine_junit_reporter',
   'js/index',
-  'map/js/views/app-view'
+  'map/js/views/app-view',
+  'sukat/js/views/app-view'
 ], function (_, $, jasmine) {
 
   var jasmineEnv = jasmine.getEnv();
