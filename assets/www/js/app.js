@@ -14,7 +14,8 @@ require.config({
     i18n:'js/lib/i18next-1.5.8.min',
 
     // Application
-    core:'js',
+    core:'./',
+    sukat:'sukatsearch',
     map:'map'
   },
   priority:['jquery', 'jquery_mobile', 'jquery_mobile_config', 'underscore', 'backbone', 'i18n'],
@@ -39,8 +40,8 @@ require.config({
 require([
   'jquery',
   'backbone',
-  'core/views/app-view'
+  'core/js/views/app-view'
 ], function ($, Backbone, AppView) {
-  var appView = new AppView({ el:$('#page-home') });
+  var appView = new AppView({ el:$('body') });
   appView.render();
 });
