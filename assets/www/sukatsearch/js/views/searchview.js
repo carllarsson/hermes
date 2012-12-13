@@ -3,8 +3,10 @@ define([
   'backbone',
   'sukat/js/views/personview',
   'sukat/js/models/personmodel',
+  'text!sukat/tpl/search.html',
+  'text!sukat/tpl/result.html',
   'jquery_mobile'
-], function (_, Backbone, PersonView, Person) {
+], function (_, Backbone, PersonView, Person, SearchTemplate, ResultTemplate) {
   var SukatSearchView = Backbone.View.extend({
 
     initialize:function () {
@@ -15,7 +17,7 @@ define([
     },
 
     render:function () {
-      var template = _.template($("#search_template").html(), {});
+      var template = _.template(SearchTemplate, {});
       this.el.innerHTML = template;
     },
 
@@ -34,7 +36,7 @@ define([
 
     resetSearchResults:function () {
       var variables = { result_count:this.collection.length };
-      var template = _.template($("#result_template").html(), variables);
+      var template = _.template(ResultTemplate, variables);
       this.$el.children('#result_content').html(template);
 
       var that = this;

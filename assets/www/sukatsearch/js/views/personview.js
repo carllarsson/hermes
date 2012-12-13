@@ -1,9 +1,10 @@
 define([
   'underscore',
-  'backbone'
-], function (_, Backbone) {
+  'backbone',
+  'text!sukat/tpl/person.html'
+], function (_, Backbone, PersonTemplate) {
   var PersonView = Backbone.View.extend({
-    template:$("#personTemplate").html(),
+    template:PersonTemplate,
 
     render:function () {
       var tmpl = _.template(this.template);

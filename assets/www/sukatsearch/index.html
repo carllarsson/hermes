@@ -14,63 +14,6 @@
 
   <script src="../js/lib/require-2.1.2.min.js" data-main="js/app.js" type="text/javascript"></script>
 
-  <script type="text/template" id="search_template">
-
-    <div data-role="fieldcontain">
-      <fieldset data-role="controlgroup">
-        <input id="search_input" type="search" placeholder="Name, uid or mail" name="">
-      </fieldset>
-    </div>
-    <a id="search_button" href="#page1" data-role="button">
-      Search
-    </a>
-
-    <div id='result_content'></div>
-  </script>
-
-  <script type="text/template" id="result_template">
-    <ul id='result_list' data-inset="true" data-divider-theme="b" data-role="listview">
-      <li role="heading" data-role="list-divider">
-        Search results (<%= result_count %>)
-      </li>
-    </ul>
-  </script>
-
-  <script type="text/template" id="personTemplate">
-    <li data-theme="c">
-      <a data-transition="slide" href="#details_page" identifier="person_<%= uid %>">
-        <%= displayName %> (<%= uid %>)
-      </a>
-    </li>
-  </script>
-
-  <script type="text/template" id="personDetailsTemplate">
-    <h2><%= displayName %></h2>
-
-    <b>Username:</b> <%= uid %><br/>
-    <b>E-mail:</b> <%= mail %><br/>
-    <b>Phone:</b> <%= telephoneNumber %><br/>
-
-    <img src="https://maps.googleapis.com/maps/api/staticmap?center=Stockholm University&amp;zoom=14&amp;size=100x100&amp;markers=Universitetsvägen 10D&amp;sensor=false"
-         height="100" width="100"/>
-
-    <a id="add_contact_button" href="#" data-role="button">
-      Add to contacts
-    </a>
-
-    <a id="make_call_button" href="tel:<%= telephoneNumber %>" data-role="button">
-      Call
-    </a>
-
-    <a id="make_sms_button" href="sms:<%= telephoneNumber %>" data-role="button">
-      SMS
-    </a>
-
-    <a id="send_mail_button" href="mailto:<%= mail %>" data-role="button">
-      Send mail
-    </a>
-  </script>
-
   <!-- maximum scale added to stop zoom on select controls -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 </head>
