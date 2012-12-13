@@ -40,8 +40,10 @@ require.config({
 require([
   'jquery',
   'backbone',
-  'core/js/views/app-view'
-], function ($, Backbone, AppView) {
+  'core/js/views/app-view',
+  'core/js/routers/app'
+], function ($, Backbone, AppView, Router) {
   var appView = new AppView({ el:$('body') });
   appView.render();
+  new Router();
 });

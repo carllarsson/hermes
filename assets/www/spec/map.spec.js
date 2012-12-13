@@ -275,7 +275,7 @@ describe('App view', function () {
 
     waitsFor(function () {
       return done;
-    }, "Create Views", 100000);
+    }, "Create Views");
   });
 
   afterEach(function () {

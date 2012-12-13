@@ -26,11 +26,10 @@ require.config({
     spec:'spec',
     fixtures:'spec/fixtures',
 
-    map:'map',
-
-    // Paths to non modules, TODO: convert to AMD
-    pm:'sukatsearch/js/models/personmodel',
-    ssv:'sukatsearch/js/views/searchview'
+    // Application
+    core:'./',
+    sukat:'sukatsearch',
+    map:'map'
   },
   priority:['jquery', 'jquery_mobile', 'jquery_mobile_config', 'underscore', 'backbone', 'i18n'],
   shim:{
@@ -85,9 +84,6 @@ require([
   'console_runner',
   'jasmine_junit_reporter',
   'js/index',
-  // TODO: Remove when converted to AMD
-  'pm',
-  'ssv',
   'map/js/views/app-view'
 ], function (_, $, jasmine) {
 

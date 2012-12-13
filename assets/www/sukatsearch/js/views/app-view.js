@@ -9,6 +9,8 @@ define([
 ], function (_, Backbone, PersonView, Person, SearchTemplate, ResultTemplate) {
   var SukatSearchView = Backbone.View.extend({
 
+    el:$('#search_view'),
+
     initialize:function () {
       _.bindAll(this, "render", "doSearch", "resetSearchResults");
 
@@ -19,6 +21,7 @@ define([
     render:function () {
       var template = _.template(SearchTemplate, {});
       this.el.innerHTML = template;
+      this.$el.trigger("create");
     },
 
     events:{
@@ -44,8 +47,7 @@ define([
         that.renderPerson(item);
       });
 
-      $('#search_page').trigger("pagecreate");
-      $('#search_page').listview('refresh');
+      $('#result_list').listview();
     },
 
     renderPerson:function (item) {
@@ -56,7 +58,7 @@ define([
       var $item = personView.render().el;
       $item.jqmData('itemId', item.get('id'));
       $item.bind('click', function () {
-        $('#details_page').jqmData('itemId', $(this).jqmData('itemId'));
+        $('#page-details').jqmData('itemId', $(this).jqmData('itemId'));
       });
 
       this.$el.find('#result_list').append($item);
