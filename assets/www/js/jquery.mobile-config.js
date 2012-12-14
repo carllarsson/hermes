@@ -12,9 +12,11 @@ define([
     $.mobile.linkBindingEnabled = false;
     $.mobile.hashListeningEnabled = false;
 
-    window.plugins.childBrowser.onClose = function () {
-      window.plugins.childBrowser.close();
-    };
+    if (window.plugins) { //If we have registered plugins.
+      window.plugins.childBrowser.onClose = function () {
+        window.plugins.childBrowser.close();
+      };
+    }
   });
 
   $('div[data-role="page"]').live('pagehide', function (event, ui) {
