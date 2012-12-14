@@ -13,9 +13,8 @@ define([
   'map/js/views/map-view',
   'text!map/tpl/campus.html',
   'text!map/tpl/location.html',
-  'text!map/tpl/footer.html',
   'jquery_mobile'
-], function (_, Backbone, Campuses, MapView, CampusTemplate, LocationTemplate, FooterTemplate) {
+], function (_, Backbone, Campuses, MapView, CampusTemplate, LocationTemplate) {
   var AppView = Backbone.View.extend(
       /** @lends AppView */
       {
@@ -46,9 +45,6 @@ define([
          * Render the app module.
          */
         render:function () {
-          var footerTpl = _.template(FooterTemplate);
-          this.$el.append(footerTpl);
-
           this.togglePoiType();
 
           this.campuses.fetch({
@@ -58,24 +54,6 @@ define([
           });
 
           this.mapView.render();
-
-          var filters = [
-            "Parkering",
-            "Restaurang",
-            "Hörsal"
-          ];
-
-          var template = _.template(LocationTemplate, {
-            defaultOptionName:i18n.t("map.general.filter"),
-            options:filters
-          });
-
-          var filterSelect = this.$el.find('#poiType');
-
-          filterSelect.append(template);
-
-          filterSelect.selectmenu();
-          filterSelect.selectmenu("refresh", true);
         },
 
         /**

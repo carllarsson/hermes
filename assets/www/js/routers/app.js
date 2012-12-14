@@ -1,10 +1,31 @@
 define([
   'jquery',
   'underscore',
-  'backbone'
+  'backbone',
+  'i18n'
 ], function ($, _, Backbone) {
   var AppRouter = Backbone.Router.extend({
     initialize:function () {
+      var self = this;
+
+      // Get locale from phonegap
+      var globalization = navigator.globalization;
+
+      if (globalization) {
+        globalization.getLocaleName(
+            function (locale) {
+              self.setLocale(locale.value);
+            },
+            function () {
+              console.log("Failed to get locale from phonegap. Using default.");
+              self.setLocale();
+            }
+        );
+      }
+      else {
+        self.setLocale();
+      }
+
       Backbone.history.start();
     },
 
@@ -12,6 +33,8 @@ define([
       // Define some URL routes
       'sukat/page-search':'sukat_search',
       'sukat/page-details/:id':'sukat_details',
+
+      'map/page-map':'map_start',
 
       // Default
       ':module/:page':'defaultRoute'
@@ -49,6 +72,19 @@ define([
       });
     },
 
+    map_start:function () {
+      var self = this;
+
+      this.defaultRoute('map', 'page-map', function () {
+        require([
+          "map/js/views/app-view"
+        ], function (AppView) {
+          self.mapView = new AppView({ el:$('#page-map') });
+          self.mapView.render();
+        });
+      });
+    },
+
     defaultRoute:function (module, page, callback) {
       var self = this;
 
@@ -59,7 +95,8 @@ define([
 
         var body = $('body');
         body.append(tpl);
-        body.trigger('create');
+        $("#" + page).page();
+        //body.trigger('create');
 
         $.mobile.changePage($("#" + page));
 
@@ -67,6 +104,21 @@ define([
           callback();
         }
       });
+    },
+
+    setLocale:function (locale) {
+      var options = {
+        useCookie:false,
+        fallbackLng:'en',
+        resGetPath:'locales/__lng__.json',
+        getAsync:false
+      };
+
+      if (locale) {
+        options.locale = locale;
+      }
+
+      i18n.init(options);
     }
   });
 

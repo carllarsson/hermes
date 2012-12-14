@@ -43,7 +43,8 @@ require([
   'core/js/views/app-view',
   'core/js/routers/app'
 ], function ($, Backbone, AppView, Router) {
+  new Router();
+
   var appView = new AppView({ el:$('body') });
   appView.render();
-  new Router();
 });
