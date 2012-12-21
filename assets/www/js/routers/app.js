@@ -7,26 +7,6 @@ define([
 ], function (require, $, _, Backbone) {
   var AppRouter = Backbone.Router.extend({
     initialize: function () {
-      var self = this;
-
-      // Get locale from phonegap
-      var globalization = navigator.globalization;
-
-      if (globalization) {
-        globalization.getLocaleName(
-            function (locale) {
-              self.setLocale(locale.value);
-            },
-            function () {
-              console.log("Failed to get locale from phonegap. Using default.");
-              self.setLocale();
-            }
-        );
-      }
-      else {
-        self.setLocale();
-      }
-
       this.defaultRoute('core', 'page-home')
     },
 
@@ -83,21 +63,6 @@ define([
       }
 
       $.mobile.changePage($("#" + page));
-    },
-
-    setLocale: function (locale) {
-      var options = {
-        useCookie: false,
-        fallbackLng: 'en',
-        resGetPath: 'locales/__lng__.json',
-        getAsync: false
-      };
-
-      if (locale) {
-        options.locale = locale;
-      }
-
-      i18n.init(options);
     }
   });
 
