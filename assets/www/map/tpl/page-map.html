@@ -1,48 +1,69 @@
 <div data-role="page" data-theme="a" data-fullscreen="true" id="page-map">
 
-  <div id="page-map-header" data-theme="a" data-role="header" class="header">
-    <div class="ui-grid-a">
-      <div class="ui-block-a">
-        <div id="campus"></div>
-      </div>
-      <div class="ui-block-b">
-        <select name="poiType" id="poiType" data-native-menu="false" multiple>
-          <option value="" data-placeholder="true"><%= i18n.t('map.general.filter') %></option>
-          <% _(['Parkering', 'Restaurang', 'Hörsal']).each(function(item) { %>
-          <option value="<%= item %>"><%= item %></option>
-          <% }); %>
-        </select>
-      </div>
+    <div id="page-map-header" data-theme="a" data-role="header" class="header">
+        <div class="ui-grid-a">
+            <div class="ui-block-a">
+                <div id="campus"></div>
+            </div>
+            <div class="ui-block-b">
+                <select name="poiType" id="poiType" data-native-menu="false" multiple>
+                    <option value="" data-placeholder="true"><%= i18n.t('map.general.filter') %></option>
+                    <% _(['Parkering', 'Restaurang', 'Hörsal']).each(function(item) { %>
+                    <option value="<%= item %>"><%= item %></option>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div data-role="content" id="map-content">
-    <div data-role="popup" data-corners="false" data-theme="a" data-shadow="false" data-tolerance="0,0"
-         id="search-popup">
-      <div data-role="fieldcontain">
-        <input name="search_input" id="search_input" data-theme="a" placeholder="Enter search string" value=""
-               type="search" data-mini="true">
-      </div>
-      <!--<a id="search_button" href="#" data-mini="true" data-role="button">Search</a>-->
-      <div id="search-popup-filters"></div>
+    <div data-role="content" id="map-content">
+        <div data-role="popup" data-corners="false" data-theme="a" data-shadow="false" data-tolerance="0,0"
+             id="search-popup">
+            <div data-role="fieldcontain">
+                <input name="search_input" id="search_input" data-theme="a" placeholder="Enter search string" value=""
+                       type="search" data-mini="true">
+            </div>
+            <!--<a id="search_button" href="#" data-mini="true" data-role="button">Search</a>-->
+            <div id="search-popup-filters"></div>
+        </div>
+        <div id="map_canvas"></div>
     </div>
-    <div id="map_canvas"></div>
-  </div>
-  <!-- /content -->
+    <!-- /content -->
 
-  <div data-role="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
-    <div data-role="navbar">
-      <ul id="footer-buttons1">
-        <li><a rel="external" data-ajax="false" data-transition="slide" href="../index.html"><%=
-          i18n.t('map.menu.home') %></a></li>
-        <li><a id="menu-search" href="#"><%= i18n.t('map.menu.search') %></a></li>
-      </ul>
-      <ul id="footer-buttons2" style="display:none;">
-        <li><a rel="external" data-ajax="false" data-transition="slide" href="../index.html"><%=
-          i18n.t('map.menu.home') %></a></li>
-        <li><a id="menu-search" href="#"><%= i18n.t('map.menu.search') %></a></li>
-        <li><a href="#page-dir"><%= i18n.t('map.menu.directions') %></a></li>
-      </ul>
+    <div data-role="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
+        <div data-role="navbar">
+            <ul id="footer-buttons1">
+                <li><a data-transition="slide" href="#core/page-home"><%=
+                    i18n.t('map.menu.home') %></a></li>
+                <li><a id="menu-search" href="#"><%= i18n.t('map.menu.search') %></a></li>
+            </ul>
+            <ul id="footer-buttons2" style="display:none;">
+                <li><a data-transition="slide" href="#core/page-home"><%=
+                    i18n.t('map.menu.home') %></a></li>
+                <li><a id="menu-search" href="#"><%= i18n.t('map.menu.search') %></a></li>
+                <li><a href="#map/page-dir"><%= i18n.t('map.menu.directions') %></a></li>
+            </ul>
+        </div>
     </div>
-  </div>
 </div>
+
+
+<div data-role="page" data-theme="a" data-fullscreen="true" id="page-dir">
+
+    <div data-role="content">
+        <div id="dir_panel"></div>
+    </div>
+    <!-- /content -->
+
+    <div data-role="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
+        <div data-role="navbar">
+            <ul>
+                <li><a data-transition="slide" href="#core/page-home">Home</a></li>
+                <li><a href="#map/page-map">Map</a></li>
+            </ul>
+        </div>
+        <!-- /navbar -->
+    </div>
+    <!-- /footer -->
+</div>
+

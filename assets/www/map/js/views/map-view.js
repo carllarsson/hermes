@@ -23,18 +23,18 @@ define([
       {
 
         /** The model for this view */
-        model:new MapModel(),
+        model: new MapModel(),
 
         /** The map */
-        map:null,
+        map: null,
 
         /** The info window */
-        mapInfoWindowView:null,
+        mapInfoWindowView: null,
 
         /**
          * @constructs
          */
-        initialize:function () {
+        initialize: function () {
           _.bindAll(this, "render", "resetSearchResults", "resetLocations");
 
           this.locations = new Location.Collection();
@@ -44,29 +44,27 @@ define([
 
           // Google Maps Options
           var myOptions = {
-            zoom:15,
-            center:this.model.get('location'),
-            mapTypeControl:false,
-            navigationControlOptions:{ position:google.maps.ControlPosition.LEFT_TOP },
-            mapTypeId:google.maps.MapTypeId.ROADMAP,
-            streetViewControl:false
+            zoom: 15,
+            center: this.model.get('location'),
+            mapTypeControl: false,
+            navigationControlOptions: { position: google.maps.ControlPosition.LEFT_TOP },
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            streetViewControl: false
           };
 
           // Add the Google Map to the page
           this.map = new google.maps.Map(this.el, myOptions);
 
-          this.directionsService = new google.maps.DirectionsService();
-
-          this.model.set({currentPosition:new Location.Model({
-            id:-100,
-            campus:null,
-            type:'CurrentPosition',
-            name:'You are here!',
-            coords:[
+          this.model.set({currentPosition: new Location.Model({
+            id: -100,
+            campus: null,
+            type: 'CurrentPosition',
+            name: 'You are here!',
+            coords: [
               [this.model.get('location').lat(), this.model.get('location').lng()]
             ],
-            directionAware:false,
-            pin:new google.maps.MarkerImage(
+            directionAware: false,
+            pin: new google.maps.MarkerImage(
                 'http://maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
                 new google.maps.Size(22, 22),
                 new google.maps.Point(0, 18),
@@ -76,19 +74,19 @@ define([
           this.locations.on("reset", this.resetLocations, this);
           this.searchResults.on("reset", this.resetSearchResults, this);
           this.model.on('change:location', this.updateCurrentPosition, this);
-          this.mapInfoWindowView = new InfoWindow({mapView:this});
+          this.mapInfoWindowView = new InfoWindow({mapView: this});
 
           this.currentPositionPoint = new PointLocationView({
-            model:this.model.get('currentPosition'),
-            gmap:this.map,
-            infoWindow:this.mapInfoWindowView
+            model: this.model.get('currentPosition'),
+            gmap: this.map,
+            infoWindow: this.mapInfoWindowView
           });
         },
 
         /**
          * Render the map view.
          */
-        render:function () {
+        render: function () {
 
           // Force the height of the map to fit the window
           $("#map-content").height($(window).height() - $("#page-map-header").height() - $(".ui-footer").height());
@@ -119,9 +117,9 @@ define([
          *
          * @param locMsg The message to put in the box.
          */
-        fadingMsg:function (locMsg) {
+        fadingMsg: function (locMsg) {
           $("<div class='ui-overlay-shadow ui-body-e ui-corner-all fading-msg'>" + locMsg + "</div>")
-              .css({ "display":"block", "opacity":0.9, "top":$(window).scrollTop() + 100 })
+              .css({ "display": "block", "opacity": 0.9, "top": $(window).scrollTop() + 100 })
               .appendTo($.mobile.pageContainer)
               .delay(2200)
               .fadeOut(1000, function () {
@@ -134,17 +132,17 @@ define([
          *
          * @param {string} campus the campus to show in the search window.
          */
-        showSearchView:function (campus) {
-          var searchView = new SearchView({ el:$('#search-popup'), campus:campus, searchResults:this.searchResults });
+        showSearchView: function (campus) {
+          var searchView = new SearchView({ el: $('#search-popup'), campus: campus, searchResults: this.searchResults });
           searchView.render();
         },
 
         /**
          * Updates the current position.
          */
-        updateCurrentPosition:function () {
+        updateCurrentPosition: function () {
           this.model.get('currentPosition').set({
-            coords:[
+            coords: [
               [this.model.get('location').lat(), this.model.get('location').lng()]
             ]
           });
@@ -153,7 +151,7 @@ define([
         /**
          * Update the position from GPS.
          */
-        updateGPSPosition:function () {
+        updateGPSPosition: function () {
           if (navigator.geolocation) {
             var self = this; // once inside block bellow, this will be the function
             navigator.geolocation.getCurrentPosition(
@@ -177,7 +175,7 @@ define([
          * @param {int} zoom zoom level over the campus.
          * @param {string} name the campus name
          */
-        updateCampusPoint:function (coords, zoom, name) {
+        updateCampusPoint: function (coords, zoom, name) {
           if (this.campusPoint) {
             this.campusPoint.remove();
           }
@@ -190,23 +188,23 @@ define([
 
           // TODO: choose pinImage for campusLocations or remove pinImage var
           this.campusPoint = new PointLocationView({
-            model:new Location.Model({
-              id:-200,
-              campus:name,
-              type:'Campus',
-              name:name,
-              coords:[coords],
-              pin:null
+            model: new Location.Model({
+              id: -200,
+              campus: name,
+              type: 'Campus',
+              name: name,
+              coords: [coords],
+              pin: null
             }),
-            gmap:self.map,
-            infoWindow:this.mapInfoWindowView
+            gmap: self.map,
+            infoWindow: this.mapInfoWindowView
           });
         },
 
         /**
          * Resets the search results from the search results collection.
          */
-        resetSearchResults:function () {
+        resetSearchResults: function () {
           this.replacePoints(this.searchResults);
           $.mobile.loading('hide');
         },
@@ -214,7 +212,7 @@ define([
         /**
          * Resets the locations from the locations collection
          */
-        resetLocations:function () {
+        resetLocations: function () {
           this.replacePoints(this.locations);
         },
 
@@ -223,7 +221,7 @@ define([
          *
          * @param {Location} newPoints the new points to paint on the map.
          */
-        replacePoints:function (newPoints) {
+        replacePoints: function (newPoints) {
           var self = this;
 
           _.each(_.values(self.pointViews), function (pointView) {
@@ -238,13 +236,13 @@ define([
             var point = null;
 
             if (item.get('shape') == "line") {
-              point = new LineLocationView({ model:item, gmap:self.map, infoWindow:self.mapInfoWindowView });
+              point = new LineLocationView({ model: item, gmap: self.map, infoWindow: self.mapInfoWindowView });
             }
             else if (item.get('shape') == "polygon") {
-              point = new PolygonLocationView({ model:item, gmap:self.map, infoWindow:self.mapInfoWindowView });
+              point = new PolygonLocationView({ model: item, gmap: self.map, infoWindow: self.mapInfoWindowView });
             }
             else {
-              point = new PointLocationView({ model:item, gmap:self.map, infoWindow:self.mapInfoWindowView });
+              point = new PointLocationView({ model: item, gmap: self.map, infoWindow: self.mapInfoWindowView });
             }
 
             self.pointViews[point.cid] = point;
@@ -257,10 +255,11 @@ define([
          * @param travelMode walking, bicycling, driving, or public transportation
          * @param destination optional parameter, defaults to destination (global variable)
          */
-        getDirections:function (travelMode, destination) {
+        getDirections: function (travelMode, destination) {
           var orig = this.model.get('location');
           var dest = destination;
           var travMode = null;
+          var self = this;
 
           if (travelMode == "walking") {
             travMode = google.maps.DirectionsTravelMode.WALKING;
@@ -273,16 +272,22 @@ define([
           }
 
 
+          var directionsService = new google.maps.DirectionsService();
           var directionsDisplay = new google.maps.DirectionsRenderer();
           directionsDisplay.setMap(this.map);
-          directionsDisplay.setPanel(document.getElementById("dir_panel"));
+
+          $('body').one('pagecreate', '#page-dir', function (event) {
+            if (directionsDisplay) {
+              directionsDisplay.setPanel(document.getElementById("dir_panel"));
+            }
+          });
 
           var request = {
-            origin:orig,
-            destination:destination,
-            travelMode:travMode
+            origin: orig,
+            destination: destination,
+            travelMode: travMode
           };
-          this.directionsService.route(request, function (result, status) {
+          directionsService.route(request, function (result, status) {
             if (status == google.maps.DirectionsStatus.OK) {
               directionsDisplay.setDirections(result);
             }

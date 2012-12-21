@@ -19,36 +19,38 @@ define([
       /** @lends AppView */
       {
 
+        el: $('#page-map'),
+
         /**
          * @constructs
          */
-        initialize:function () {
+        initialize: function () {
           _.bindAll(this, "render", "changeCampus", "showPOIs");
 
           this.campuses = new Campuses.Collection;
 
           this.campuses.on("reset", this.renderCampuses, this);
 
-          this.mapView = new MapView({ el:$('#map_canvas') });
+          this.mapView = new MapView({ el: $('#map_canvas') });
         },
 
         /**
          * Registers events.
          */
-        events:{
-          "change #campus":"changeCampus",
-          "change #poiType":"showPOIs",
-          "click a[id=menu-search]":"openSearchPopup"
+        events: {
+          "change #campus": "changeCampus",
+          "change #poiType": "showPOIs",
+          "click a[id=menu-search]": "openSearchPopup"
         },
 
         /**
          * Render the app module.
          */
-        render:function () {
+        render: function () {
           this.togglePoiType();
 
           this.campuses.fetch({
-            error:function () {
+            error: function () {
               alert("ERROR! Failed to fetch campuses.");
             }
           });
@@ -61,7 +63,7 @@ define([
          *
          * @param event the triggering event.
          */
-        openSearchPopup:function (event) {
+        openSearchPopup: function (event) {
           var campus = this.campuses.get($("#campus").val());
           if (campus) {
             campus = campus.get('name');
@@ -73,10 +75,10 @@ define([
         /**
          * Render campus select.
          */
-        renderCampuses:function () {
+        renderCampuses: function () {
           var template = _.template(CampusTemplate, {
-            defaultOptionName:i18n.t("map.general.campus"),
-            options:this.campuses.toJSON()
+            defaultOptionName: i18n.t("map.general.campus"),
+            options: this.campuses.toJSON()
           });
 
           this.$el.find('#campus').replaceWith(template);
@@ -91,7 +93,7 @@ define([
          * @param e event.
          * @param v value.
          */
-        changeCampus:function (e, v) {
+        changeCampus: function (e, v) {
           this.togglePoiType();
 
           var campus = this.campuses.get($("#campus").val());
@@ -102,7 +104,7 @@ define([
         /**
          * Show Points Of Interest
          */
-        showPOIs:function () {
+        showPOIs: function () {
           var campus = this.campuses.get($("#campus").val());
           if (campus !== null) {
             campus = campus.get("name");
@@ -116,11 +118,11 @@ define([
           }
           else {
             this.mapView.locations.fetch({
-              data:{
-                campus:campus,
-                types:types
+              data: {
+                campus: campus,
+                types: types
               },
-              error:function () {
+              error: function () {
                 alert("ERROR! Failed to fetch locations.");
               }
             });
@@ -130,7 +132,7 @@ define([
         /**
          * Disable filter select if no campus is chosen, else enable
          */
-        togglePoiType:function () {
+        togglePoiType: function () {
           if ($("#campus").val() === "") {
             $('#poiType').selectmenu("disable");
           } else {
