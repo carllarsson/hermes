@@ -41,7 +41,7 @@ require.config({
 });
 
 require([
-  'core/js/routers/app',
+  'core/js/routers/core-router',
   'jquery_mobile'
 ], function (Router) {
   new Router();
