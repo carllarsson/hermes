@@ -6,6 +6,19 @@
  * @author <a href="mailto:lucien.bokouka@su.se">Lucien Bokouka</a>
  * @type {Backbone.View}
  */
+define([
+  'jquery',
+  'underscore',
+  'backbone',
+  'map/js/models/map-model',
+  'map/js/models/locationmodel',
+  'map/js/views/map-infoWindow-view',
+  'map/js/views/point-location-view',
+  'map/js/views/line-location-view',
+  'map/js/views/search-view',
+  'map/js/views/campus-popup-view',
+  'async!http://maps.google.com/maps/api/js?v=3&sensor=false'
+], function ($, _, Backbone, MapModel, Location, InfoWindow, PointLocationView, LineLocationView, SearchView, CampusPopupView) {
 var MapView = Backbone.View.extend(
     /** @lends MapView */
     {
@@ -25,8 +38,8 @@ var MapView = Backbone.View.extend(
       initialize: function () {
         _.bindAll(this, "render", "resetSearchResults", "resetLocations", "showCampusesList");
 
-        this.locations = new Locations();
-        this.searchResults = new LocationSearchResult();
+          this.locations = new Location.Collection();
+          this.searchResults = new Location.Results();
         this.pointViews = {};
         this.campusPoint = null;
 
@@ -41,10 +54,11 @@ var MapView = Backbone.View.extend(
         };
 
         // Add the Google Map to the page
-        this.$el.gmap(myOptions);
-        this.map = this.$el.gmap("get", "map");
+          this.map = new google.maps.Map(this.el, myOptions);
 
-        this.model.set({currentPosition: new Location({
+          this.directionsService = new google.maps.DirectionsService();
+
+          this.model.set({currentPosition:new Location.Model({
           id: -100,
           campus: null,
           type: 'CurrentPosition',
@@ -177,7 +191,7 @@ var MapView = Backbone.View.extend(
 
         // TODO: choose pinImage for campusLocations or remove pinImage var
         this.campusPoint = new PointLocationView({
-          model: new Location({
+            model:new Location.Model({
             id: -200,
             campus: name,
             type: 'Campus',
@@ -305,20 +319,22 @@ var MapView = Backbone.View.extend(
           travMode = google.maps.DirectionsTravelMode.TRANSIT;
         }
 
-        this.$el.gmap('displayDirections', {
-              'origin': orig,
-              'destination': dest,
-              'travelMode': travMode },
-            { 'panel': document.getElementById('dir_panel') },
-            function (result, status) {
-              if (status === 'OK') {
-                var center = result.routes[0].bounds.getCenter();
-                $('#map_canvas').gmap('option', 'center', center);
-                $('#map_canvas').gmap('refresh');
-              } else {
-                alert('Unable to get route');
+
+          var directionsDisplay = new google.maps.DirectionsRenderer();
+          directionsDisplay.setMap(this.map);
+          directionsDisplay.setPanel(document.getElementById("dir_panel"));
+
+          var request = {
+            origin:orig,
+            destination:destination,
+            travelMode:travMode
+          };
+          this.directionsService.route(request, function (result, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+              directionsDisplay.setDirections(result);
               }
+          });
             }
-        );
-      }
     }); //-- End of Map view
+  return MapView;
+});

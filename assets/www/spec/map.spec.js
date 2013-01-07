@@ -1,7 +1,17 @@
 describe('Location model', function () {
   describe('when creating an empty location', function () {
     beforeEach(function () {
-      this.location = new Location();
+      var self = this;
+      var done = false;
+
+      require(['map/js/models/locationmodel'], function (Location) {
+        self.location = new Location.Model();
+        done = true;
+      });
+
+      waitsFor(function () {
+        return done;
+      }, "Create Models");
     });
 
     it('should have id 0', function () {
@@ -43,13 +53,23 @@ describe('Location model', function () {
 
   describe('when creating a location', function () {
     beforeEach(function () {
-      this.location = new Location({
-        campus: 'campus',
-        type: 'type',
-        coords: [
-          [59, 18]
-        ]
+      var self = this;
+      var done = false;
+
+      require(['map/js/models/locationmodel'], function (Location) {
+        self.location = new Location.Model({
+          campus: 'campus',
+          type: 'type',
+          coords: [
+            [59, 18]
+          ]
+        });
+        done = true;
       });
+
+      waitsFor(function () {
+        return done;
+      }, "Create Models");
     });
 
     it('should generate a poi type from "campus.type"', function () {
@@ -66,11 +86,22 @@ describe('Location model', function () {
 describe('Locations collection', function () {
   describe('creating an empty collection', function () {
     beforeEach(function () {
-      this.locations = new Locations();
+      var self = this;
+      var done = false;
+
+      require(['map/js/models/locationmodel'], function (Location) {
+        self.locations = new Location.Collection();
+        self.locationModel = Location.Model;
+        done = true;
+      });
+
+      waitsFor(function () {
+        return done;
+      }, "Create Models");
     });
 
     it('should have Location for model', function () {
-      expect(this.locations.model).toBe(Location);
+      expect(this.locations.model).toBe(this.locationModel);
     });
 
     it('should have a url pointing at broker geo api', function () {
@@ -80,15 +111,30 @@ describe('Locations collection', function () {
 
   describe('fetching a collection of locations', function () {
     beforeEach(function () {
-      this.locations = new Locations();
-      this.fixture = this.fixtures.Locations.valid;
+      var self = this;
+      var done = false;
 
+      require([
+        'map/js/models/locationmodel',
+        'fixtures/locations'
+      ], function (Location, Fixtures) {
+        self.locations = new Location.Collection();
+        self.fixture = Fixtures.valid;
+        done = true;
+      });
+
+      waitsFor(function () {
+        return done;
+      }, "Create Models");
+
+      runs(function () {
       this.server = sinon.fakeServer.create();
       this.server.respondWith(
           "GET",
           this.locations.url(),
           this.validResponse(this.fixture)
       );
+    });
     });
 
     afterEach(function () {
@@ -127,15 +173,30 @@ describe('Locations collection', function () {
 
   describe('filtering a Location collection', function () {
     beforeEach(function () {
-      this.locations = new Locations();
-      this.fixture = this.fixtures.Locations.valid;
+      var self = this;
+      var done = false;
 
+      require([
+        'map/js/models/locationmodel',
+        'fixtures/locations'
+      ], function (Location, Fixtures) {
+        self.locations = new Location.Collection();
+        self.fixture = Fixtures.valid;
+        done = true;
+      });
+
+      waitsFor(function () {
+        return done;
+      }, "Create Models");
+
+      runs(function () {
       this.server = sinon.fakeServer.create();
       this.server.respondWith(
           "GET",
           this.locations.url(),
           this.validResponse(this.fixture)
       );
+    });
     });
 
     afterEach(function () {
@@ -173,7 +234,18 @@ describe('Locations collection', function () {
 describe('LocationSearchResult collection', function () {
 	  describe('creating an empty collection', function () {
 	    beforeEach(function () {
-	      this.locationSearchResults = new LocationSearchResult();
+	        var self = this;
+	        var done = false;
+
+	        require(['map/js/models/locationmodel'], function (Location) {
+	  	      self.locationSearchResults = new Location.Results();
+	          done = true;
+	        });
+	        
+	        waitsFor(function () {
+	            return done;
+	          }, "Create Models");
+	        
 	    });
 
 	    it('should have Location for model', function () {
@@ -187,15 +259,30 @@ describe('LocationSearchResult collection', function () {
 
 	  describe('fetching a collection of locationSearchResults', function () {
 	    beforeEach(function () {
-	      this.locationSearchResults = new LocationSearchResult();
-	      this.fixture = this.fixtures.Locations.valid;
+	        var self = this;
+	        var done = false;
 
-	      this.server = sinon.fakeServer.create();
-	      this.server.respondWith(
-	          "GET",
-	          this.locationSearchResults.url(),
-	          this.validResponse(this.fixture)
-	      );
+	        require([
+	             'map/js/models/locationmodel',
+	             'fixtures/locations'
+	           ], function (Location, Fixtures) {
+		  	     self.locationSearchResults = new Location.Results();
+			     self.fixture = Fixtures.Locations.valid;
+	             done = true;
+	           });
+	
+	           waitsFor(function () {
+	             return done;
+	           }, "Create Models");
+	    	
+	           runs(function () {
+			      this.server = sinon.fakeServer.create();
+			      this.server.respondWith(
+			          "GET",
+			          this.locationSearchResults.url(),
+			          this.validResponse(this.fixture)
+			      );
+	           });
 	    });
 
 	    afterEach(function () {
@@ -238,7 +325,17 @@ describe('LocationSearchResult collection', function () {
 describe('Map model', function () {
   describe('when creating a new map model', function () {
     beforeEach(function () {
-      this.model = new MapModel();
+      var self = this;
+      var done = false;
+
+      require(['map/js/models/map-model'], function (MapModel) {
+        self.model = new MapModel();
+        done = true;
+      });
+
+      waitsFor(function () {
+        return done;
+      }, "Create Models");
     });
 
     it('should not have a currentPosition', function () {
@@ -434,10 +531,20 @@ describe('Map view', function () {
 
 describe('App view', function () {
   beforeEach(function () {
+    var self = this;
+    var done = false;
+
     this.origBody = $('body').html;
     $('body').append("<div id='page-map'><div id='map_canvas'></div></div>");
 
-    this.view = new AppView({el: $('#page-map')});
+    require(['map/js/views/app-view'], function (AppView) {
+      self.view = new AppView({el:$('#page-map')});
+      done = true;
+    });
+
+    waitsFor(function () {
+      return done;
+    }, "Create Views");
   });
 
   afterEach(function () {

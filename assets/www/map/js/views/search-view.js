@@ -5,6 +5,12 @@
  * @author <a href="mailto:joakim.lundin@su.se">Joakim Lundin</a>
  * @type {Backbone.View}
  */
+define([
+  'jquery',
+  'underscore',
+  'backbone',
+  'text!map/tpl/filter_button.html'
+], function ($, _, Backbone, FilterButtonTemplate) {
 var SearchView = Backbone.View.extend(
     /** @lends SearchView */
     {
@@ -52,7 +58,7 @@ var SearchView = Backbone.View.extend(
 
         // Add a filter button for the campus (if one is selected)
         if (this.campus) {
-          var template = _.template($("#search-popup_filter_button_template").html(), { id: "search-popup_campus_button", name: this.campus });
+            var template = _.template(FilterButtonTemplate, { id:"search-popup_campus_button", name:this.campus });
           filtersContainer.append(template);
         }
 
@@ -67,7 +73,7 @@ var SearchView = Backbone.View.extend(
           var typeId = "search-popup_type_button_" + type;
           typeIds.push(typeId);
 
-          var template = _.template($("#search-popup_filter_button_template").html(), { id: typeId, name: type });
+            var template = _.template(FilterButtonTemplate, { id:typeId, name:type });
           filtersContainer.append(template);
         });
         
@@ -144,3 +150,6 @@ var SearchView = Backbone.View.extend(
         this.$el.hide();
       }
     }); //-- End of Search view
+
+  return SearchView;
+});

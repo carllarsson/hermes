@@ -11,7 +11,6 @@ var helper = {
 };
 
 beforeEach(function () {
-
   this.validResponse = function (responseText) {
     return [
       200,
@@ -19,5 +18,4 @@ beforeEach(function () {
       JSON.stringify(responseText)
     ];
   };
-
 });

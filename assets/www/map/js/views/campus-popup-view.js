@@ -5,6 +5,12 @@
  * @author <a href="mailto:lucien.bokouka@su.se">Lucien Bokouka</a>
  * @type {Backbone.View}
  */
+define([
+  'jquery',
+  'underscore',
+  'backbone',
+  'jquery_mobile'
+], function ($, _, Backbone) {
 var CampusPopupView = Backbone.View.extend(
 	/** @lends CampusPopupView */
 	{
@@ -68,3 +74,6 @@ var CampusPopupView = Backbone.View.extend(
 		}
 
 	}); 
+
+	return CampusPopupView;
+});

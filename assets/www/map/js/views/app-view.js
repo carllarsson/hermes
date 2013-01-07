@@ -6,6 +6,16 @@
  * @author <a href="mailto:lucien.bokouka@su.se">Lucien Bokouka</a>
  * @type {Backbone.View}
  */
+define([
+  'underscore',
+  'backbone',
+  'map/js/models/campusmodel',
+  'map/js/views/map-view',
+  'text!map/tpl/campus.html',
+  'text!map/tpl/location.html',
+  'text!map/tpl/footer.html',
+  'jquery_mobile'
+], function (_, Backbone, Campuses, MapView, CampusTemplate, LocationTemplate, FooterTemplate) {
 var AppView = Backbone.View.extend(
     /** @lends AppView */
     {
@@ -16,7 +26,7 @@ var AppView = Backbone.View.extend(
       initialize: function () {
         _.bindAll(this, "render", "changeCampus", "showPOIs");
 
-        this.campuses = new Campuses();
+          this.campuses = new Campuses.Collection;
 
         this.campuses.on("reset", this.renderCampuses, this);
 
@@ -36,7 +46,7 @@ var AppView = Backbone.View.extend(
        * Render the app module.
        */
       render: function () {
-        var footerTpl = _.template($("#page-map-footer_template").html());
+          var footerTpl = _.template(FooterTemplate);
         this.$el.append(footerTpl);
 
         this.togglePoiType();
@@ -55,7 +65,7 @@ var AppView = Backbone.View.extend(
           "Hörsal"
         ];
 
-        var template = _.template($("#location_template").html(), {
+          var template = _.template(LocationTemplate, {
           defaultOptionName: i18n.t("map.general.filter"),
           options: filters
         });
@@ -86,7 +96,7 @@ var AppView = Backbone.View.extend(
        * Render campus select.
        */
       renderCampuses: function () {
-        var template = _.template($("#campus_template").html(), {
+          var template = _.template(CampusTemplate, {
           defaultOptionName: i18n.t("map.general.campus"),
           options: this.campuses.toJSON()
         });
@@ -152,3 +162,5 @@ var AppView = Backbone.View.extend(
         }
       }
     });
+  return AppView;
+});

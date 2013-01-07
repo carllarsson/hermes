@@ -1,7 +1,17 @@
 describe('Person model', function () {
   describe('when creating an empty person', function () {
     beforeEach(function () {
-      this.person = new Person();
+      var self = this;
+      var done = false;
+
+      require(['sukat/js/models/personmodel'], function (Person) {
+        self.person = new Person.Model();
+        done = true;
+      });
+
+      waitsFor(function () {
+        return done;
+      }, "Create Models");
     });
 
     it('should have givenName Unknown', function () {
@@ -29,11 +39,22 @@ describe('Person model', function () {
 describe('Person collection', function () {
   describe('creating an empty collection', function () {
     beforeEach(function () {
-      this.persons = new Persons();
+      var self = this;
+      var done = false;
+
+      require(['sukat/js/models/personmodel'], function (Person) {
+        self.persons = new Person.Collection();
+        self.personModel = Person.Model;
+        done = true;
+      });
+
+      waitsFor(function () {
+        return done;
+      }, "Create Models");
     });
 
     it('should have Person for model', function () {
-      expect(this.persons.model).toBe(Person);
+      expect(this.persons.model).toBe(this.personModel);
     });
 
     it('should have a url pointing at broker geo api', function () {
@@ -43,15 +64,30 @@ describe('Person collection', function () {
 
   describe('fetching a collection of persons', function () {
     beforeEach(function () {
-      this.persons = new Persons();
-      this.fixture = this.fixtures.Persons.valid;
+      var self = this;
+      var done = false;
 
-      this.server = sinon.fakeServer.create();
-      this.server.respondWith(
-          "GET",
-          this.persons.url(),
-          this.validResponse(this.fixture)
-      );
+      require([
+        'sukat/js/models/personmodel',
+        'fixtures/persons'
+      ], function (Person, Fixtures) {
+        self.persons = new Person.Collection();
+        self.fixture = Fixtures.valid;
+        done = true;
+      });
+
+      waitsFor(function () {
+        return done;
+      }, "Create Fixtures");
+
+      runs(function () {
+        this.server = sinon.fakeServer.create();
+        this.server.respondWith(
+            "GET",
+            this.persons.url(),
+            this.validResponse(this.fixture)
+        );
+      });
     });
 
     afterEach(function () {
@@ -90,10 +126,20 @@ describe('Person collection', function () {
 
 describe('Search view', function () {
   beforeEach(function () {
-    this.origBody = $('body').html;
-    $('body').append("<div id='search-page'><div id='search_view'></div></div>");
+    var self = this;
+    var done = false;
 
-    this.view = new SukatSearchView({el: $('#search_view')});
+    this.origBody = $('body').html;
+    $('body').append("<div id='page-search'><div id='search_view'></div></div>");
+
+    require(['sukat/js/views/app-view'], function (AppView) {
+      self.view = new AppView({el:$('#search_view')});
+      done = true;
+    });
+
+    waitsFor(function () {
+      return done;
+    }, "Create Views");
   });
 
   afterEach(function () {

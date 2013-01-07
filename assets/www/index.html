@@ -5,15 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Stockholm University Demo</title>
 
-  <link rel="stylesheet" href="css/jquery.mobile-1.1.1.min.css"/>
+  <link rel="stylesheet" href="css/jquery.mobile-1.2.0.min.css"/>
 
   <script src="cordova-2.2.0.js"></script>
-  <script src="js/lib/jquery-1.8.2.min.js"></script>
-  <script src="js/lib/jquery.mobile-1.1.1.min.js"></script>
-
   <script type="text/javascript" charset="utf-8" src="childbrowser.js"></script>
-  <script src="js/su-app-global.js"></script>
-  <script src="js/su-app-take-photo.js"></script>
+
+  <script src="js/lib/require-2.1.2.min.js" data-main="js/app.js"></script>
+
 
   <style>
     .ui-content {
@@ -40,96 +38,5 @@
   </style>
 </head>
 <body>
-
-<div data-role="page" class="type-home" id="page-home" style="background-image: url(img/su-app-background.png);">
-  <div data-role="content">
-    <p class="jqm-version"></p>
-
-    <!-- Home -->
-    <div data-role="content" style="/*padding: 15px*/">
-      <div class="ui-grid-c">
-        <div class="ui-block-a">
-          <a id="sukat_search_button" href="sukatsearch/index.html" data-ajax="false"><img
-                  src="img/icons/Address_Book.png"></a>
-        </div>
-
-        <div class="ui-block-b">
-          <a id="map_button" href="map/index.html" data-ajax="false"><img id="map-button" src="img/icons/maps.png"></a>
-        </div>
-
-        <div class="ui-block-c">
-          <a onclick="ontap=openChildBrowser('https://mondo.su.se/portal/pda',null)"><img
-                  src="img/icons/mondo_button.png"></a>
-        </div>
-
-        <div class="ui-block-d">
-          <a onclick="ontap=openChildBrowser('http://www.su.se',null)"><img src="img/icons/Web.png"></a>
-        </div>
-
-        <div class="ui-block-a">
-          <a onclick="ontap=openChildBrowser('http://www.sub.su.se/mobil',null)"><img src="img/icons/Library.png"></a>
-        </div>
-
-        <div class="ui-block-b">
-          <a href="#page-camera"><img src="img/icons/System.png"></a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div data-role="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
-    <div data-role="navbar">
-      <ul>
-        <li><a href="mailto:mobile-feedback@it.su.se" class="refresh">Feedback</a></li>
-        <li><a href="#page-settings">Settings</a></li>
-      </ul>
-    </div>
-    <!-- /navbar -->
-  </div>
-  <!-- /footer -->
-</div>
-
-<div data-role="page" data-fullscreen="true" id="page-camera">
-  <div data-theme="a" data-role="header">
-    <h3>Capture SU</h3>
-    <a data-role="button" rel="external" data-ajax="false" data-transition="slide" href="#page-home" data-icon="arrow-l"
-       data-iconpos="left" class="ui-btn-left">
-      Back
-    </a>
-  </div>
-  <div id="search_view" data-role="content">
-    <button onclick="capturePhoto();">Capture Photo</button>
-    <br>
-
-    <!--
-   <button onclick="capturePhotoEdit();">Capture Editable Photo</button> <br>
-   <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
-   <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button><br>
-    -->
-    <img style="display:none;width:60px;height:60px;" id="smallImage" src=""/>
-    <img style="display:none;" id="largeImage" src=""/>
-  </div>
-</div>
-
-<div data-role="page" data-theme="a" id="page-settings">
-  <div data-theme="a" data-role="header">
-    <h3>
-      Settings
-    </h3>
-  </div>
-  <div data-role="content">
-    <h2>
-      No settings yet.
-    </h2>
-  </div>
-  <div data-theme="a" data-role="footer" data-position="fixed">
-    <div data-role="navbar">
-      <ul>
-        <li><a href="" class="refresh">Save</a></li>
-        <li><a href="#page-home">Cancel</a></li>
-      </ul>
-    </div>
-    <!-- /navbar -->
-  </div>
-</div>
 </body>
 </html>
