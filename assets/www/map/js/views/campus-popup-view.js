@@ -9,7 +9,8 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'jquery_mobile'
+  'jquery_mobile',
+  'text!map/tpl/campus-popup.html'
 ], function ($, _, Backbone) {
 var CampusPopupView = Backbone.View.extend(
 	/** @lends CampusPopupView */

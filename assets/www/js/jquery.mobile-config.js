@@ -1,6 +1,7 @@
 define([
   'jquery',
-  'underscore'
+  'underscore'/*,
+   'jquery_mobile_router'*/
 ], function ($, _) {
   $(document).on("mobileinit", function () {
     $.support.cors = true;
@@ -18,8 +19,9 @@ define([
       };
     }
   });
-
-  $('div[data-role="page"]').live('pagehide', function (event, ui) {
-    $(event.currentTarget).remove();
-  });
+  /*
+   $('div[data-role="page"]').live('pagehide', function (event, ui) {
+   $(event.currentTarget).unbind();
+   $(event.currentTarget).remove();
+   });*/
 });

@@ -76,18 +76,18 @@ define([
         url:function () {
           return 'http://pgbroker-dev.it.su.se/geo/poi';
         },
-      bounds: null,
-      campuses: null,
+        bounds: null,
+        campuses: null,
       
-      /** 
-       * Intercept method performed after fetch(). 
-       * In this method the bounds and campuses variable are set.
-       */
-      parse: function(response) {
+        /** 
+         * Intercept method performed after fetch(). 
+         * In this method the bounds and campuses variable are set.
+         */
+        parse: function(response) {
     	  this.bounds = response.bounds;
     	  this.campuses = response.campuses;
     	  return response.locations;
-      },
+        },
   	  
 
         /**

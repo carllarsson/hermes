@@ -38,12 +38,42 @@ require.config({
 });
 
 require([
-  'jquery',
-  'backbone',
-  'core/js/views/app-view',
-  'core/js/routers/app'
-], function ($, Backbone, AppView, Router) {
-  var appView = new AppView({ el:$('body') });
-  appView.render();
+  'core/js/routers/core-router',
+  'jquery_mobile'
+], function (Router) {
   new Router();
+  Backbone.history.start();
+
+  // Get locale from phonegap
+  var globalization = navigator.globalization;
+
+  if (globalization) {
+    globalization.getLocaleName(
+        function (locale) {
+          setLocale(locale.value);
+        },
+        function () {
+          console.log("Failed to get locale from phonegap. Using default.");
+          setLocale();
+        }
+    );
+  }
+  else {
+    setLocale();
+  }
 });
+
+function setLocale(locale) {
+  var options = {
+    useCookie: false,
+    fallbackLng: 'en',
+    resGetPath: 'locales/__lng__.json',
+    getAsync: false
+  };
+
+  if (locale) {
+    options.locale = locale;
+  }
+
+  i18n.init(options);
+}
