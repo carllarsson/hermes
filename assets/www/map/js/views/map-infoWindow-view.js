@@ -27,22 +27,7 @@ define([
           _.bindAll(this, 'render');
 
           this.infoWindow = new google.maps.InfoWindow();
-
-          var self = this;
-
-          // TODO: refactor to (backbone) events: { [selector]: [function] }, couldn't get this to work. /lucien
-          $(".dir-button").live("click", function () {
-            self.remove();
-
-            $("#footer-buttons1").hide();
-            $("#footer-buttons2").show();
-
-            $(".dir-button").each(function () {
-              $(this).removeClass("selected");
-            });
-            $(this).addClass("selected");
-            options.mapView.getDirections(this.id, self.destination);
-          });
+          this.mapView = options.mapView;
         },
 
         /**
@@ -70,6 +55,22 @@ define([
           } else {
             this.infoWindow.open(anchor.getMap(), anchor);
           }
+
+          var self = this;
+
+          // TODO: refactor to (backbone) events: { [selector]: [function] }, couldn't get this to work. /lucien
+          $(".dir-button").on("click", function () {
+            self.remove();
+
+            $("#footer-buttons1").hide();
+            $("#footer-buttons2").show();
+
+            $(".dir-button").each(function () {
+              $(this).removeClass("selected");
+            });
+            $(this).addClass("selected");
+            self.mapView.getDirections(this.id, self.destination);
+          });
         },
 
         /**

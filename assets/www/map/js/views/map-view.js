@@ -56,8 +56,6 @@ var MapView = Backbone.View.extend(
         // Add the Google Map to the page
           this.map = new google.maps.Map(this.el, myOptions);
 
-          this.directionsService = new google.maps.DirectionsService();
-
           this.model.set({currentPosition:new Location.Model({
           id: -100,
           campus: null,
@@ -308,6 +306,7 @@ var MapView = Backbone.View.extend(
         var orig = this.model.get('location');
         var dest = destination;
         var travMode = null;
+          var self = this;
 
         if (travelMode == "walking") {
           travMode = google.maps.DirectionsTravelMode.WALKING;
@@ -320,21 +319,28 @@ var MapView = Backbone.View.extend(
         }
 
 
+          var directionsService = new google.maps.DirectionsService();
           var directionsDisplay = new google.maps.DirectionsRenderer();
           directionsDisplay.setMap(this.map);
-          directionsDisplay.setPanel(document.getElementById("dir_panel"));
+
+          $('body').one('pagecreate', '#page-dir', function (event) {
+            if (directionsDisplay) {
+              directionsDisplay.setPanel(document.getElementById("dir_panel"));
+            }
+          });
 
           var request = {
-            origin:orig,
-            destination:destination,
-            travelMode:travMode
+            origin: orig,
+            destination: destination,
+            travelMode: travMode
           };
-          this.directionsService.route(request, function (result, status) {
+          directionsService.route(request, function (result, status) {
             if (status == google.maps.DirectionsStatus.OK) {
               directionsDisplay.setDirections(result);
-              }
-          });
             }
+          });
+       }
     }); //-- End of Map view
+    
   return MapView;
 });
