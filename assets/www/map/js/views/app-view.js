@@ -27,7 +27,7 @@ var AppView = Backbone.View.extend(
       initialize: function () {
         _.bindAll(this, "render", "changeCampus", "showPOIs");
 
-          this.campuses = new Campuses.Collection;
+        this.campuses = new Campuses.Collection;
 
         this.campuses.on("reset", this.renderCampuses, this);
 

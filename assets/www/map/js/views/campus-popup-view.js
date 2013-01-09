@@ -9,8 +9,7 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'jquery_mobile',
-  'text!map/tpl/campus-popup.html'
+  'jquery_mobile'
 ], function ($, _, Backbone) {
 var CampusPopupView = Backbone.View.extend(
 	/** @lends CampusPopupView */
@@ -47,6 +46,7 @@ var CampusPopupView = Backbone.View.extend(
 		 */
 		render: function () {
 			var self = this; 
+			
 			// remove everything from the list except the first element (the header)
 			$("#campusesPopupList").find("li:not(:first-child)").remove();
 			$(this.campuses).each(function(i, campusName) { // append all campuses

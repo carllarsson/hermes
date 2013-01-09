@@ -58,7 +58,7 @@ var SearchView = Backbone.View.extend(
 
         // Add a filter button for the campus (if one is selected)
         if (this.campus) {
-            var template = _.template(FilterButtonTemplate, { id:"search-popup_campus_button", name:this.campus });
+          var template = _.template(FilterButtonTemplate, { id:"search-popup_campus_button", name:this.campus });
           filtersContainer.append(template);
         }
 
@@ -73,7 +73,7 @@ var SearchView = Backbone.View.extend(
           var typeId = "search-popup_type_button_" + type;
           typeIds.push(typeId);
 
-            var template = _.template(FilterButtonTemplate, { id:typeId, name:type });
+          var template = _.template(FilterButtonTemplate, { id:typeId, name:type });
           filtersContainer.append(template);
         });
         
