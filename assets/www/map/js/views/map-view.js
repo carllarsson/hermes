@@ -237,7 +237,7 @@ var MapView = Backbone.View.extend(
 	      var campusPopupView = new CampusPopupView({ el: $('#campusesPopup'), campuses: campuses, campusesMap: campusesMap });
 	      campusPopupView.render();
 	    },
-      
+
 
       /**
        * Resets the search results from the search results collection.
