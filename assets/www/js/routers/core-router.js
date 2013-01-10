@@ -7,19 +7,26 @@ define([
 ], function (require, $, _, Backbone) {
   var AppRouter = Backbone.Router.extend({
     initialize: function () {
-      this.defaultRoute('core', 'page-home')
+    	
     },
 
     routes: {
       // Define some URL routes
       'sukat/page-details/:id': 'sukat_details',
 
-      // Default
-      ':module/:page': 'defaultRoute'
+      // Default (for defined modules/pages)
+      ':module/:page': 'changeRoute',
+      
+      // Default (no routes defined)
+      '*path': 'defaultRoute'
+    },
+    
+    defaultRoute: function() {
+    	this.changeRoute('core', 'page-home');
     },
 
     sukat_details: function (id) {
-      this.defaultRoute('sukat', 'page-details');
+      this.changeRoute('sukat', 'page-details');
 
       var itemsDetailsContainer = $('#page-details').find(":jqmData(role='content')"),
           itemDetailsView,
@@ -35,7 +42,7 @@ define([
       });
     },
 
-    defaultRoute: function (module, page) {
+    changeRoute: function (module, page) {
       // If page not in dom, fetch it.
       if ($('#' + page).length == 0) {
         // Remove other pages.

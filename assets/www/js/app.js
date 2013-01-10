@@ -44,9 +44,6 @@ require([
   'core/js/routers/core-router',
   'jquery_mobile'
 ], function (Router) {
-  new Router();
-  Backbone.history.start();
-
   // Get locale from phonegap
   var globalization = navigator.globalization;
 
@@ -64,6 +61,9 @@ require([
   else {
     setLocale();
   }
+  
+  new Router();
+  Backbone.history.start();
 });
 
 function setLocale(locale) {
@@ -77,6 +77,6 @@ function setLocale(locale) {
   if (locale) {
     options.locale = locale;
   }
-
+  
   i18n.init(options);
 }
