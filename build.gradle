@@ -1,12 +1,22 @@
+import java.nio.charset.Charset;
+
 import groovy.json.JsonSlurper
 import javax.net.ssl.HttpsURLConnection
+
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.methods.HttpPut
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.entity.mime.MultipartEntity
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.content.FileBody
+import org.apache.http.entity.mime.content.StringBody
+import org.apache.http.HttpHost;
 import org.apache.http.HttpVersion
 import org.apache.http.params.CoreProtocolPNames
+import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.HttpResponse
 import org.apache.http.util.EntityUtils
 import org.apache.tools.ant.filters.*
@@ -19,7 +29,7 @@ description = """Prototype of Stockholm University mobile app."""
 def archiveFile = 'su.tar.gz'
 def phonegapAppId = '219084'
 def phonegapUser = 'utveckling@it.su.se'
-def phonegapPass = System.getenv('PG_PASS')
+def phonegapPassword = System.getenv('PG_PASS')
 def phantomjs = System.getenv('PHANTOMJS')
 
 apply plugin: 'saga'
@@ -157,62 +167,69 @@ buildTar.doFirst {
   zipFile.delete()
 }
 
+
+
 task toPhonegap(dependsOn: buildTar) {
   doLast {
 
-    if (!phonegapPass) {
+    if (!phonegapPassword) {
       def console = System.console()
       if (console) {
-        phonegapPass = console.readPassword("\n> Password for ${phonegapUser}: ").toString()
+        phonegapPassword = console.readPassword("\n> Password for ${phonegapUser}: ").toString()
       }
     }
 
-    def token = getToken(phonegapUser, phonegapPass)
-    def apiCall = "https://build.phonegap.com/api/v1/apps/${phonegapAppId}?auth_token=${token}"
+	def host = "build.phonegap.com"
+    def apiCall = "https://build.phonegap.com/api/v1/apps/${phonegapAppId}"
 
     DefaultHttpClient httpclient = new DefaultHttpClient();
-    httpclient.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+
+	// -- AUTHENTICATION --
+	AuthScope authScope = new AuthScope(host, 443);
+	UsernamePasswordCredentials upc = new UsernamePasswordCredentials(
+			phonegapUser, phonegapPassword);
+	((AbstractHttpClient) httpclient).getCredentialsProvider()
+			.setCredentials(authScope, upc);
+	BasicHttpContext localContext = new BasicHttpContext();
+	BasicScheme basicAuth = new BasicScheme();
+	localContext.setAttribute("preemptive-auth", basicAuth);
+	HttpHost targetHost = new HttpHost(host, 443, "https");
+	// -- AUTHENTICATION END
+
+	// Header info
+	httpclient.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
     HttpPut httpPut = new HttpPut(apiCall)
     httpPut.getParams().setBooleanParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, true)
     httpPut.setHeader("Accept", "*/*")
 
+	// Multipart request - one part containing info to unlock keys, one part containing app file
     MultipartEntity mp = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+	StringBody stringBody = new StringBody("""{"keys":
+			{"android":{"id":10672, "key_pw": "2u4ppH3rm32", "keystore_pw": "2u4ppH3rm32"},
+			"ios":{"id":46818, "password": "2u4ppH3rm32"}
+			}
+		}""", 
+		"application/json", Charset.forName("utf-8"))
+    mp.addPart('data', stringBody);
     FileBody fileBody = new FileBody(new File(archiveFile), "binary/octet-stream");
     mp.addPart('file', fileBody);
-    httpPut.setEntity(mp);
-    HttpResponse response = httpclient.execute(httpPut)
+    httpPut.setEntity(mp); // add the two parts to the request
+	// execute request
+    HttpResponse response = httpclient.execute(targetHost, httpPut, localContext)
 
     def status = response.statusLine.statusCode
+    def json = new JsonSlurper().parseText(EntityUtils.toString(response.entity))
 
-    if (status != 200)
-      throw new Exception("Failed to publish to phonegap: ${status}: ${response.statusLine.reasonPhrase}")
-    else {
-
-      def json = new JsonSlurper().parseText(EntityUtils.toString(response.entity))
-
-      if (json?.error?.size() > 0)
-        throw new Exception("Error during publish to phonegap: ${json.error}")
-      else
+    if (json?.error?.size() > 0) {
+	  throw new Exception("Error during publish to phonegap: ${json.error}")
+    } else if (status != 200) {
+      throw new Exception("Failed to publish to phonegap: (${json.error}) ${status}: ${response.statusLine.reasonPhrase}")
+    } else {
         println "Successfully published app '${json.title}' v${json.version} build nr ${json.build_count} to phonegap."
     }
   }
 }
 
-String getToken(String user, String pass) {
-
-  def authString = "${user}:${pass}".getBytes().encodeBase64().toString()
-
-  def connection = (HttpsURLConnection) "https://build.phonegap.com/token".toURL().openConnection()
-  connection.setRequestProperty("Authorization", "Basic ${authString}")
-  connection.setRequestProperty("Accept", "application/json")
-  connection.requestMethod = "POST"
-
-  if (connection?.responseCode != 200)
-    throw new Exception("Failed to get token: ${connection?.responseCode}: ${connection?.responseMessage}")
-
-  def json = new JsonSlurper().parseText(connection?.content?.text)
-  json?.token
-}
 
 /**
  * Config
