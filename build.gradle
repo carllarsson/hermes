@@ -85,7 +85,7 @@ jslint {
   inputDirs = ['assets/www/']
   haltOnFailure = false
   excludes = '**/cordova*.js,**/childbrowser.js,**/lib/**/*.js'
-  options = 'rhino'
+  options = 'rhino,eqeq'
   formatterType = 'xml'
 }
 
