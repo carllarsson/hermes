@@ -258,7 +258,7 @@ var MapView = Backbone.View.extend(
           }
 
           this.fadingMsg("Sökningen returnerade träffar i flera campus.");
-          this.showCampusesList(this.searchResults.campuses);        	
+          this.showCampusesList(this.searchResults.campuses);
         }
         $.mobile.loading('hide');
       },
