@@ -420,7 +420,7 @@ describe('Map view', function () {
 
     it('should populate campus popup list with the correct number of campuses', function () {
       expect($("#campusesPopup li").length).toEqual(1);
-      this.view.showCampusesList(["Frescati", "Kista", "Frescati hage"])
+      this.view.showCampusesList(["Frescati", "Kista", "Frescati hage"]);
       expect($("#campusesPopup li").length).toEqual(4);
     });
   });
