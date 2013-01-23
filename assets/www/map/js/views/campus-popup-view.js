@@ -30,7 +30,7 @@ var CampusPopupView = Backbone.View.extend(
 
 	  /** Registers events */
 	  events: {
-	    "click #campusesPopupList": "selectCampus",
+	    "click #campusesPopupList": "selectCampus"
 	  },
 
 	  selectCampus: function(evt) {
