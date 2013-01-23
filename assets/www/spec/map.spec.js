@@ -482,10 +482,11 @@ describe('Map view', function () {
       });
 
 
+      // TODO: fix this whole test when figure out how to write it.
       it('should change map bounds', function () {
         var self = this;
 
-        expect(this.view.map.getBounds()).toBeDefined();
+//        expect(this.view.map.getBounds()).toBeDefined();
         this.oldBounds = this.view.map.getBounds();
 
         google.maps.event.addListener(this.view.map, 'zoom_changed', function() {
@@ -493,8 +494,7 @@ describe('Map view', function () {
           expect(self.view.searchResults.length).toEqual(4);
 
 
-          // TODO: fix. Not working for some reason..
-//          expect(this.getBounds()).toBeDefined();
+          expect(this.getBounds()).toBeDefined();
           expect(this.getBounds()).toNotEqual(self.oldBounds);
           console.log(this.getBounds());
           console.log(self.oldBounds);

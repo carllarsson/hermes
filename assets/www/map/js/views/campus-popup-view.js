@@ -59,13 +59,17 @@ var CampusPopupView = Backbone.View.extend(
 	    $(document).find("[data-role='popup']:not([id='campusesPopup'])").popup("close").bind({
 	      // show the campuses popup after the other popups has closed
 	      popupafterclose: function(event, uit) {
-	        // --- HACK: for correct y position of popup ---
+	        // --- HACK: for correct x and y position of popup ---
+	        var x = 150;
+	        // device is only defined when running on a physical device (not a web browser)
+	        if (device) x = 50; 
+	        
 	        var cellHeight = $("#campusesPopup li:nth-child(2)").height();
 	        var noOfCells = $("#campusesPopup li:not(:first-child)").length;
 	        var y = noOfCells * (cellHeight / 3) + 150;
-	        // --- END  HACK: for correct y position of popup ---
+	        // --- END  HACK: for correct x and y position of popup ---
 
-	        $( "#campusesPopup" ).popup( "open", { x:150, y:y } );
+	        $( "#campusesPopup" ).popup( "open", { x:x, y:y } );
 
 	        // unbind popupafterclose event after campuses popup open, to ensure it's 
 	        // not accidentally opened after any other search.
