@@ -40,39 +40,39 @@ var MapView = Backbone.View.extend(
       initialize: function () {
         _.bindAll(this, "render", "resetSearchResults", "resetLocations", "showCampusesList");
 
-          this.locations = new Location.Collection();
-          this.searchResults = new Location.Results();
+        this.locations = new Location.Collection();
+        this.searchResults = new Location.Results();
         this.pointViews = {};
         this.campusPoint = null;
 
         // Google Maps Options
         var myOptions = {
-          zoom: 15,
-          center: this.model.get('location'),
-          mapTypeControl: false,
-          navigationControlOptions: { position: google.maps.ControlPosition.LEFT_TOP },
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-          streetViewControl: false
+            zoom: 15,
+            center: this.model.get('location'),
+            mapTypeControl: false,
+            navigationControlOptions: { position: google.maps.ControlPosition.LEFT_TOP },
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            streetViewControl: false
         };
 
-	      // Add the Google Map to the page
-	      this.map = new google.maps.Map(this.el, myOptions);
-	
-	      this.model.set({
-	    	  currentPosition:new Location.Model({
-	    		  id: -100,
-	    		  campus: null,
-	    		  type: 'CurrentPosition',
-	    		  name: 'You are here!',
-	    		  coords: [[this.model.get('location').lat(), this.model.get('location').lng()]],
-			           directionAware: false,
-			           pin: new google.maps.MarkerImage(
-		        		   'http://maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
-		        		   new google.maps.Size(22, 22),
-		        		   new google.maps.Point(0, 18),
-		        		   new google.maps.Point(11, 11))
-	    	  })
-	      });
+        // Add the Google Map to the page
+        this.map = new google.maps.Map(this.el, myOptions);
+
+        this.model.set({
+          currentPosition:new Location.Model({
+            id: -100,
+            campus: null,
+            type: 'CurrentPosition',
+            name: 'You are here!',
+            coords: [[this.model.get('location').lat(), this.model.get('location').lng()]],
+            directionAware: false,
+            pin: new google.maps.MarkerImage(
+                'http://maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
+                new google.maps.Size(22, 22),
+                new google.maps.Point(0, 18),
+                new google.maps.Point(11, 11))
+          })
+        });
 
         this.locations.on("reset", this.resetLocations, this);
         this.searchResults.on("reset", this.resetSearchResults, this);
@@ -136,13 +136,13 @@ var MapView = Backbone.View.extend(
        * @param {string} campus the campus to show in the search window.
        */
       showSearchView: function (campus) {
-    	  if (this.searchView == null) {
-    		  this.searchView = new SearchView({ el: $('#search-popup'), campus: campus, searchResults: this.searchResults });
-    	  } else {
-    		  this.searchView.campus = campus;
-    		  this.searchView.searchResults = this.searchResults;
-    	  }
-    	  this.searchView.render();
+        if (this.searchView == null) {
+          this.searchView = new SearchView({ el: $('#search-popup'), campus: campus, searchResults: this.searchResults });
+        } else {
+          this.searchView.campus = campus;
+          this.searchView.searchResults = this.searchResults;
+        }
+        this.searchView.render();
       },
 
       /**
@@ -215,12 +215,12 @@ var MapView = Backbone.View.extend(
        * @param {Map} bounds containing coordinates for minLat, maxLat, minLng, maxLat.
        */
       zoomToBounds: function(bounds) {
-    	  if (bounds.minLat != 0 && bounds.maxLat != 0 && bounds.minLng != 0 && bounds.maxLng != 0) {
-    		  var sw = new google.maps.LatLng(bounds.minLat, bounds.minLng);
-    		  var ne = new google.maps.LatLng(bounds.maxLat, bounds.maxLng);
-    		  var latLngBounds = new google.maps.LatLngBounds(sw, ne);
-    		  this.map.fitBounds(latLngBounds);
-    	  }
+        if (bounds.minLat != 0 && bounds.maxLat != 0 && bounds.minLng != 0 && bounds.maxLng != 0) {
+          var sw = new google.maps.LatLng(bounds.minLat, bounds.minLng);
+          var ne = new google.maps.LatLng(bounds.maxLat, bounds.maxLng);
+          var latLngBounds = new google.maps.LatLngBounds(sw, ne);
+          this.map.fitBounds(latLngBounds);
+        }
       },
       
       /**
@@ -229,14 +229,14 @@ var MapView = Backbone.View.extend(
        * @param {List} campuses list, ex ['Frescati', 'Kista', etc...]
        */
       showCampusesList: function (campuses) {
-    	  var campusesMap = {};
-    	  $("#campus").children().not(":first").each(function(k, item) {
-    		  campusesMap[$(item).text()] = $(item).val();
-    	  });
-    	  
-	      var campusPopupView = new CampusPopupView({ el: $('#campusesPopup'), campuses: campuses, campusesMap: campusesMap });
-	      campusPopupView.render();
-	    },
+        var campusesMap = {};
+        $("#campus").children().not(":first").each(function(k, item) {
+          campusesMap[$(item).text()] = $(item).val();
+        });
+
+        var campusPopupView = new CampusPopupView({ el: $('#campusesPopup'), campuses: campuses, campusesMap: campusesMap });
+        campusPopupView.render();
+      },
 
 
       /**
@@ -252,13 +252,13 @@ var MapView = Backbone.View.extend(
 
         // if the search results exists in multiple campuses, show campus list
         if (this.searchResults.campuses && this.searchResults.campuses.length > 1) {
-            // zoom out to include all points when no campuses have been selected
-            if ($("#campus").val() == "") {
-            	this.zoomToBounds(this.searchResults.bounds);
-            }
-        	
-        	this.fadingMsg("Sökningen returnerade träffar i flera campus.");
-            this.showCampusesList(this.searchResults.campuses);        	
+          // zoom out to include all points when no campuses have been selected
+          if ($("#campus").val() == "") {
+            this.zoomToBounds(this.searchResults.bounds);
+          }
+
+          this.fadingMsg("Sökningen returnerade träffar i flera campus.");
+          this.showCampusesList(this.searchResults.campuses);        	
         }
         $.mobile.loading('hide');
       },

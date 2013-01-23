@@ -7,7 +7,7 @@ define([
 ], function (require, $, _, Backbone) {
   var AppRouter = Backbone.Router.extend({
     initialize: function () {
-    	
+      
     },
 
     routes: {
@@ -22,7 +22,7 @@ define([
     },
     
     defaultRoute: function() {
-    	this.changeRoute('core', 'page-home');
+      this.changeRoute('core', 'page-home');
     },
 
     sukat_details: function (id) {
@@ -46,18 +46,20 @@ define([
       // If page not in dom, fetch it.
       if ($('#' + page).length == 0) {
         // Remove other pages.
-
         var url = require.toUrl(module + "/tpl/" + page + ".html");
 
         var html = "";
-        $.ajax({url: url, success: function (result) {
+        $.ajax({url: url, async: false}).done(function(result) {
           html = result;
-        }, async: false});
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+          console.error("error loading ajax");
+          console.error(JSON.stringify(jqXHR));
+        });
 
         var tpl = _.template(html);
         var body = $('body');
         body.append(tpl);
-
+        
         $("#" + page).page();
 
         var self = this;

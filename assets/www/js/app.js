@@ -1,5 +1,17 @@
+/**
+ * Hack for getting the base url.
+ * @returns the substring of the url until after the first 'www/'.
+ *          I.e. file:///devel/suApp/www/map/index.html ==> file:///devel/suApp/www
+ */
+function getBaseURL() {
+  var s = "www/";
+  var i = window.location.href.indexOf(s);
+  var baseUrl = window.location.href.substring(0, i + s.length - 1);
+  return baseUrl;
+}
+
 require.config({
-  baseUrl: "./",
+  baseUrl: getBaseURL(),
   paths: {
     // Require plugins
     async: 'js/lib/requirejs-plugins/async',
@@ -14,7 +26,7 @@ require.config({
     i18n: 'js/lib/i18next-1.5.8.min',
 
     // Application
-    core: './',
+    core: getBaseURL(),
     sukat: 'sukatsearch',
     map: 'map'
   },
@@ -46,7 +58,7 @@ require([
 ], function (Router) {
   // Get locale from phonegap
   var globalization = navigator.globalization;
-
+  
   if (globalization) {
     globalization.getLocaleName(
         function (locale) {

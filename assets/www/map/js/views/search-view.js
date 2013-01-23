@@ -79,7 +79,7 @@ var SearchView = Backbone.View.extend(
         
         
         // Open the search popup.
-    	this.$el.popup("open", { transition: 'slidedown'});
+        this.$el.popup("open", { transition: 'slidedown'});
 
         // Attach functionality to clicks on the filter buttons.
 

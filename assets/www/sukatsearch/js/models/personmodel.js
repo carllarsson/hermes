@@ -23,5 +23,5 @@ define([
   return {
     Model:Person,
     Collection:Persons
-  }
+  };
 });
