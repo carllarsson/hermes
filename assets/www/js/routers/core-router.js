@@ -50,6 +50,7 @@ define([
 
         var html = "";
         $.ajax({url: url, async: false}).done(function(result) {
+          alert("get page: " + url);
           html = result;
         }).fail(function(jqXHR, textStatus, errorThrown) {
           console.error("error loading ajax");
