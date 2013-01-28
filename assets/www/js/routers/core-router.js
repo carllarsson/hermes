@@ -6,26 +6,26 @@ define([
   'i18n'
 ], function (require, $, _, Backbone) {
   var AppRouter = Backbone.Router.extend({
-    initialize: function () {
-      
+    initialize:function () {
+
     },
 
-    routes: {
+    routes:{
       // Define some URL routes
-      'sukat/page-details/:id': 'sukat_details',
+      'sukat/page-details/:id':'sukat_details',
 
       // Default (for defined modules/pages)
-      ':module/:page': 'changeRoute',
-      
+      ':module/:page':'changeRoute',
+
       // Default (no routes defined)
-      '*path': 'defaultRoute'
+      '*path':'defaultRoute'
     },
-    
-    defaultRoute: function() {
+
+    defaultRoute:function () {
       this.changeRoute('core', 'page-home');
     },
 
-    sukat_details: function (id) {
+    sukat_details:function (id) {
       this.changeRoute('sukat', 'page-details');
 
       var itemsDetailsContainer = $('#page-details').find(":jqmData(role='content')"),
@@ -37,30 +37,30 @@ define([
       require([
         "sukat/js/views/person_details-view"
       ], function (PersonDetailsView) {
-        itemDetailsView = new PersonDetailsView({el: $('#details_view'), model: itemModel, viewContainer: itemsDetailsContainer});
+        itemDetailsView = new PersonDetailsView({el:$('#details_view'), model:itemModel, viewContainer:itemsDetailsContainer});
         itemDetailsView.render();
       });
     },
 
-    changeRoute: function (module, page) {
+    changeRoute:function (module, page) {
       // If page not in dom, fetch it.
-      if ($('#' + page).length == 0) {
+      if ($('#' + page).length === 0) {
         // Remove other pages.
         var url = require.toUrl(module + "/tpl/" + page + ".html");
 
         var html = "";
-        $.ajax({url: url, async: false}).done(function(result) {
+        $.ajax({url:url, async:false}).done(function (result) {
           alert("get page: " + url);
           html = result;
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-          console.error("error loading ajax");
-          console.error(JSON.stringify(jqXHR));
-        });
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+              console.error("error loading ajax");
+              console.error(JSON.stringify(jqXHR));
+            });
 
         var tpl = _.template(html);
         var body = $('body');
         body.append(tpl);
-        
+
         $("#" + page).page();
 
         var self = this;
