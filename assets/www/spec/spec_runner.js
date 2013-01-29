@@ -10,8 +10,8 @@ require.config({
     jquery:'js/lib/jquery-1.8.2.min',
     jquery_mobile:'js/lib/jquery.mobile-1.2.0.min',
     jquery_mobile_config:'map/js/jquery.mobile-config',
-    underscore:'js/lib/underscore-1.3.3-min',
-    backbone:'js/lib/backbone-0.9.2-min',
+    underscore:'js/lib/underscore-1.4.3-amd-min',
+    backbone:'js/lib/backbone-0.9.10-amd-min',
     i18n:'js/lib/i18next-1.5.8.min',
 
     // Test framework
