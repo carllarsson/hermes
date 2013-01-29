@@ -115,7 +115,7 @@ describe('Person collection', function () {
       expect(firstPerson.get('uid')).toEqual('test1');
       expect(firstPerson.get('displayName')).toEqual('Test1 Räksmörgås');
       expect(firstPerson.get('mail')).toEqual('test1@su.se');
-      expect(firstPerson.get('telephoneNumber')).toBeNull();
+      expect(firstPerson.get('telephoneNumber')).toEqual('+468162000');
       expect(firstPerson.get('sn')).toEqual('Räksmörgås');
       expect(firstPerson.get('cn')).toEqual('Test1 Räksmörgås');
       expect(firstPerson.get('givenName')).toEqual('Test1');
