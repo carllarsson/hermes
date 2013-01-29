@@ -48,31 +48,28 @@ define([
         // Remove other pages.
         var url = require.toUrl(module + "/tpl/" + page + ".html");
 
-        var html = "";
-        $.ajax({url:url, async:false}).done(function (result) {
-          alert("get page: " + url);
-          html = result;
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-              console.error("error loading ajax");
-              console.error(JSON.stringify(jqXHR));
-            });
-
-        var tpl = _.template(html);
-        var body = $('body');
-        body.append(tpl);
-
-        $("#" + page).page();
-
-        var self = this;
         require([
-          module + "/js/views/app-view"
-        ], function (AppView) {
-          self.currentView = new AppView();
-          self.currentView.render();
+               'text!'+url
+               ], function (Template) {
+          var tpl = _.template(Template, {});
+          var body = $('body');
+          body.append(tpl);
+          $("#" + page).page();
+
+          var self = this;
+          require([
+            module + "/js/views/app-view"
+          ], function (AppView) {
+            self.currentView = new AppView();
+            self.currentView.render();
+
+            $.mobile.changePage($("#" + page));
+          });
         });
       }
-
-      $.mobile.changePage($("#" + page));
+      else {
+        $.mobile.changePage($("#" + page));
+      }
     }
   });
 
