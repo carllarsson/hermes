@@ -27,7 +27,7 @@
       "departments": "Institutioner",
       "computerlabs": "Datorsalar",
       "auditoriums": "Hörsalar",
-      "parking": "Parkeringar",
+      "parking": "Parkering",
       "restaurants": "Matställen"
     },
 
@@ -39,7 +39,7 @@
       "car": "Med bil",
       "hearing_loop": {
         "exists": "Hörslinga finns",
-        "noexists": "Hörslinga loop finns ej"
+        "noexists": "Hörslinga finns ej"
       },
       "elevator": {
         "exists": "Tillgänglig hiss finns",
@@ -58,7 +58,7 @@
     },
 
     "search": {
-      "noresults": "Inga resultat funna"
+      "noresults": "Inga resultat"
     }
   },
   "start": {
@@ -67,12 +67,12 @@
       "departments": "Institutioner",
       "auditoriums": "Hör- & skrivsalar",
       "computerLabs": "Datorsalar",
-      "parkingspaces": "Parkeringar",
+      "parkingspaces": "Parkering",
       "restaurants": "Matställen",
       "sukatSearch": "Personal",
       "courses": "Kurser & Program",
       "studentService": "Studentservice",
-      "accessibility": "Tillgänglighet i appen"
+      "accessibility": "Tillgänglighet på kartan"
     },
     "header": {
       "title": "Stockholms universitet"
@@ -81,7 +81,7 @@
   "studentService": {
     "menu": {
       "applicationAndAdmission": "Anmälan & antagning",
-      "degreeAndCertificate": "Examen & studieintyg",
+      "degreeAndCertificate": "Examen",
       "guidanceCounseling": "Studievägledning",
       "infoCentre": "Infocenter",
       "healthService": "Studenthälsan",
@@ -100,17 +100,17 @@
   },
   "accessibility": {
     "info": {
-      "desc": "Information om tillgänglighet (hörslinga, handikappanpassad toalett, hiss, entré och parkering) på SU hittar du söker fram en sal, ett hus eller parkeringar i appen."
+      "desc": "Information om tillgänglighet (hörslinga, tillgänglig toalett, hiss, entré och parkering) på Stockholms universitet när du söker fram en sal, ett hus eller parkeringar på kartan."
     },
     "icon": {
-      "handicapEntrance": "Handikappentré",
-      "handicapLift": "Handikapphiss",
-      "handicapToilet": "Handikapptoalett",
-      "handicapParking": "Handikapp-parkering",
+      "handicapEntrance": "Tillgänglig entré",
+      "handicapLift": "Tillgänglig hiss",
+      "handicapToilet": "Tillgänglig toalett",
+      "handicapParking": "Tillgänglig parkering",
       "hearingLoop": "Hörslinga"
     },
     "header": {
-      "title": "Tillgänglighet i appen"
+      "title": "Tillgänglighet på kartan"
     }
   },
 

@@ -101,6 +101,13 @@ body {
   content: "-";
 }
 
+#HTMLReporter .exceptions {
+  color: #fff;
+  float: right;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
 #HTMLReporter .bar {
   line-height: 28px;
   font-size: 14px;

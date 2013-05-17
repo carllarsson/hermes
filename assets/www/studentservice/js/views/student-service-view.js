@@ -29,55 +29,40 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-describe('Polygon location view', function () {
-  describe('initializing', function () {
-    beforeEach(function () {
-      spyOn(GenericLocationView.prototype, "initialize");
-    });
+var StudentView = Backbone.View.extend({
+  initialize: function () {
 
-    it('should call GenericLocationView.initialize', function () {
-      this.view = new PolygonLocationView({
-        model: new Location()
-      });
+    $(document).on('deviceready.appview', this.handleDeviceReady);
 
-      expect(GenericLocationView.prototype.initialize).toHaveBeenCalled();
-    });
+    initLocale({ resGetPath: '../i18n/__lng__.json' });
+    $('div[data-role="header"] > h1').attr('data-i18n', 'studentService.header.title');
+    this.$el.i18n();
+  },
 
-    it('should create a google.Maps.Polygon', function () {
-      spyOn(google.maps, 'Polygon');
+  events: {
+    'click a.servicelink': 'handleServiceLinkClick'
+  },
 
-      this.view = new PolygonLocationView({
-        model: new Location()
-      });
+  /**
+   * Remove handler for the view.
+   */
+  remove: function () {
+    $(document).off('.appview');
 
-      expect(google.maps.Polygon).toHaveBeenCalledWith({
-        strokeColor: "#000000",
-        strokeOpacity: 0.8,
-        strokeWeight: 3,
-        fillColor: "#00ff00",
-        fillOpacity: 0.35,
-        visible: true,
-        poiType: this.view.model.getPoiType(),
-        map: null,
-        paths: this.view.model.getGPoints()
-      });
-    });
-  });
+    Backbone.View.prototype.remove.call(this);
+  },
 
-  describe('updatePosition', function () {
-    beforeEach(function () {
-      spyOn(GenericLocationView.prototype, "initialize");
-    });
+  /**
+   * Handles the device ready event.
+   */
+  handleDeviceReady: function () {
+    gaPlugin.trackPage(null, null, "studentservice/index.html");
+  },
 
-    it('should call marker.setPath', function () {
-      this.view = new PolygonLocationView({
-        model: new Location()
-      });
-      spyOn(this.view.marker, 'setPath');
-
-      this.view.updatePosition();
-
-      expect(this.view.marker.setPath).toHaveBeenCalledWith(this.view.model.getGPoints());
-    });
-  });
+  /**
+   * Handles the device ready event.
+   */
+  handleServiceLinkClick: function (event) {
+    gaPlugin.trackPage(null, null, $(event.target).attr("href"));
+  }
 });

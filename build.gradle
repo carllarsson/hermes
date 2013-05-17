@@ -1,3 +1,36 @@
+/*
+ * Copyright (c) 2013, IT Services, Stockholm University
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * Neither the name of Stockholm University nor the names of its contributors
+ * may be used to endorse or promote products derived from this software
+ * without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+
+
 import java.nio.charset.Charset;
 
 import groovy.json.JsonSlurper
@@ -24,12 +57,15 @@ import org.apache.tools.ant.filters.*
 version = "0.0.4"
 group = "se.su.it.handheld.app"
 archivesBaseName = "hermes"
-description = """Prototype of Stockholm University mobile app."""
+description = """Stockholm University mobile app (alfa)."""
 
 def archiveFile = 'su.tar.gz'
 def phonegapAppId = '219084'
 def phonegapUser = 'utveckling@it.su.se'
 def phonegapPassword = System.getenv('PG_PASS')
+def phonegapKey = System.getenv('PG_KEY')
+def androidCertKeyId = 19331
+def iOSCertKeyId = 68333
 
 def phantomjs = {
   String phantomjsBin = System.getenv('PHANTOMJS')
@@ -224,8 +260,8 @@ task toPhonegap(dependsOn: [buildTar, copySplash]) {
     // Multipart request - one part containing info to unlock keys, one part containing app file
     MultipartEntity mp = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
     StringBody stringBody = new StringBody("""{"keys":
-      {"android":{"id":10672, "key_pw": "2u4ppH3rm32", "keystore_pw": "2u4ppH3rm32"},
-      "ios":{"id":46818, "password": "2u4ppH3rm32"}
+      {"android":{"id":$androidCertKeyId, "key_pw": "$phonegapKey", "keystore_pw": "$phonegapKey"},
+      "ios":{"id":$iOSCertKeyId, "password": "$phonegapKey"}
       }
     }""",
             "application/json", Charset.forName("utf-8"))

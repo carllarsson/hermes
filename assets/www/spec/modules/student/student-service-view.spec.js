@@ -29,55 +29,54 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-describe('Polygon location view', function () {
-  describe('initializing', function () {
-    beforeEach(function () {
-      spyOn(GenericLocationView.prototype, "initialize");
-    });
+/**
+ * Tests for the StudentView
+ */
 
-    it('should call GenericLocationView.initialize', function () {
-      this.view = new PolygonLocationView({
-        model: new Location()
-      });
+describe('Student view', function () {
+  beforeEach(function () {
+    var html = "<div data-role='page' id='studentservice_page' style='width:200px; height:200px'>" +
+        "<div id='studentservice_view' data-role='content'>" +
+        "<ul data-role='listview' data-inset='true'>" +
+        "<li>" +
+        "<a href='http://www.su.se/utbildning/anmalan-antagning' target='_blank' class='servicelink'>" +
+        "<span data-i18n='studentService.menu.applicationAndAdmission'>Admission</span>" +
+        "</a>" +
+        "</li>" +
+        "</ul>" +
+        "</div>";
 
-      expect(GenericLocationView.prototype.initialize).toHaveBeenCalled();
-    });
+    $('#stage').replaceWith(html);
+    $.mobile.loadPage("#studentservice_page", {prefetch: "true"});
 
-    it('should create a google.Maps.Polygon', function () {
-      spyOn(google.maps, 'Polygon');
+    this.view = new StudentView({ el: $('#studentservice_page') });
+  });
 
-      this.view = new PolygonLocationView({
-        model: new Location()
-      });
+  afterEach(function () {
+    $('#studentservice_page').replaceWith("<div id='stage'></div>");
+  });
 
-      expect(google.maps.Polygon).toHaveBeenCalledWith({
-        strokeColor: "#000000",
-        strokeOpacity: 0.8,
-        strokeWeight: 3,
-        fillColor: "#00ff00",
-        fillOpacity: 0.35,
-        visible: true,
-        poiType: this.view.model.getPoiType(),
-        map: null,
-        paths: this.view.model.getGPoints()
-      });
+  describe('on deviceready', function () {
+    it('should call trackPage on GAPlugin for correct page', function () {
+
+      spyOn(window.plugins.gaPlugin, 'trackPage');
+
+      $(document).trigger('deviceready');
+
+      expect(window.plugins.gaPlugin.trackPage).toHaveBeenCalledWith(null, null, "studentservice/index.html");
     });
   });
 
-  describe('updatePosition', function () {
-    beforeEach(function () {
-      spyOn(GenericLocationView.prototype, "initialize");
-    });
+  describe('on handleServiceLinkClick', function () {
+    it('should call trackPage on GAPlugin for link target', function () {
+      spyOn(window.plugins.gaPlugin, 'trackPage');
 
-    it('should call marker.setPath', function () {
-      this.view = new PolygonLocationView({
-        model: new Location()
-      });
-      spyOn(this.view.marker, 'setPath');
+      var target = $('a.servicelink');
+      $(target).trigger('click');
 
-      this.view.updatePosition();
-
-      expect(this.view.marker.setPath).toHaveBeenCalledWith(this.view.model.getGPoints());
+      expect(window.plugins.gaPlugin.trackPage).toHaveBeenCalledWith(null, null, target.attr('href'));
     });
   });
+
 });
+

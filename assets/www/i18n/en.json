@@ -34,32 +34,32 @@
 
     "infoWindow": {
       "directions": "Directions",
-      "walking": "Walking",
-      "bicycling": "Bicycling",
-      "publicTransit": "By public transit",
-      "car": "By car",
+      "walking": "On foot",
+      "bicycling": "By bike",
+      "publicTransit": "By Public transport",
+      "car": "By Car",
       "hearing_loop": {
-        "exists": "Hearing loop exists",
-        "noexists": "Hearing loop does not exist"
+        "exists": "Hearing loop available",
+        "noexists": "Hearing loop not available"
       },
       "elevator": {
-        "exists": "Accessible elevator exists",
-        "noexists": "Accessible elevator does not exist"
+        "exists": "Accessible lift available",
+        "noexists": "Accessible lift not available"
       },
       "toilet": {
-        "exists": "Accessible toilet exists, floor",
-        "noexists": "Accessible toilet does not exist"
+        "exists": "Accessible toilet available, floor",
+        "noexists": "Accessible toilet not available"
       },
       "entrance": {
-        "exists": "Accessible entrance exists",
+        "exists": "Accessible entrance available",
         "show": "Show accessible entrances",
         "hide": "Hide accessible entrances",
-        "noexists": "Accessible entrance does not exist"
+        "noexists": "Accessible entrance not available"
       }
     },
 
     "search": {
-      "noresults": "No results available"
+      "noresults": "No results"
     }
   },
   "start": {
@@ -67,8 +67,8 @@
       "buildings": "Buildings",
       "departments": "Departments",
       "auditoriums": "Auditoriums",
-      "computerLabs": "Computer Labs",
-      "parkingspaces": "Parking Spaces",
+      "computerLabs": "Computer labs",
+      "parkingspaces": "Parking spaces",
       "restaurants": "Restaurants",
       "sukatSearch": "Staff",
       "courses": "Courses",
@@ -82,13 +82,13 @@
   "studentService": {
     "menu": {
       "applicationAndAdmission": "Admission",
-      "degreeAndCertificate": "Degrees and Certificates",
-      "guidanceCounseling": "Guidance Counceling",
+      "degreeAndCertificate": "Degrees",
+      "guidanceCounseling": "Study Counselling",
       "infoCentre": "Information Centre",
       "healthService": "Student Health",
       "studentDisabilityService": "Student Disability Service",
-      "studyAbroad": "Study Abroad",
-      "equality": "Equality"
+      "studyAbroad": "Study abroad",
+      "equality": "Equal treatment"
     },
     "header": {
       "title": "Student Service"
@@ -101,13 +101,13 @@
   },
   "accessibility": {
     "info": {
-      "desc": "Some text about accessibility at Stockholm University, bla, bla, bla..."
+      "desc": "Information about accessibility (hearing loops, accessible toilets, lifts entrances and parking spaces) at Stockholm University, searching for lecture halls, buildings or parking spaces on the map"
     },
     "icon": {
-      "handicapEntrance": "Handicap entrance",
-      "handicapLift": "Handicap lift",
-      "handicapToilet": "Handicap toilet",
-      "handicapParking": "Handicap parkin",
+      "handicapEntrance": "Accessible entrances",
+      "handicapLift": "Accessible lifts",
+      "handicapToilet": "Accessible toilets",
+      "handicapParking": "Accessible parking spaces",
       "hearingLoop": "Hearing loop"
     },
     "header": {
@@ -117,11 +117,11 @@
 
   "sukat": {
     "search": "Search",
-    "placeholder": "Please enter name",
-    "searchpersons": "Search persons",
-    "searchresult": "Search result",
+    "placeholder": "Enter name",
+    "searchpersons": "Search staff",
+    "searchresult": "Search results",
     "username": "User name:",
-    "email": "E-mail:",
+    "email": "Email:",
     "phone": "Phone:",
     "contacts": "Add to contacts",
     "call": "Call",
