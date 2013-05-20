@@ -89,31 +89,8 @@ var MapView = Backbone.View.extend(
         };
 
         // Add the Google Map to the page
-        //this.map = new google.maps.Map(this.el, myOptions);
         this.$el.gmap(myOptions);
         this.map = this.$el.gmap("get", "map");
-
-        var currentPosition = new Location({
-          id: -100,
-          campus: null,
-          type: 'CurrentPosition',
-          name: 'You are here!',
-          coords: [
-            [this.model.get('location').lat(), this.model.get('location').lng()]
-          ],
-          directionAware: false,
-          pin: new google.maps.MarkerImage(
-              'http://maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
-              new google.maps.Size(22, 22),
-              new google.maps.Point(0, 18),
-              new google.maps.Point(11, 11))
-        });
-
-        this.currentPositionPoint = new PointLocationView({
-          model: currentPosition,
-          gmap: this.map,
-          infoWindow: this.infoWindowView
-        });
 
         var self = this;
         $(this.map).addEventListener('zoom_changed', function () {
@@ -142,8 +119,6 @@ var MapView = Backbone.View.extend(
 
         this.resize();
 
-        this.currentPositionPoint.render();
-
         var self = this;
 
         /* Using the two blocks below istead of creating a new view for
@@ -158,7 +133,6 @@ var MapView = Backbone.View.extend(
         $('#page-dir table').live("tap", function () {
           $.mobile.changePage($('#page-map'), {});
         });
-        /* ------------------------------------------------------------- */
       },
 
       /**
@@ -167,6 +141,28 @@ var MapView = Backbone.View.extend(
       resize: function () {
         // Force the height of the map to fit the window
         $("#map-content").height($(window).height() - $("[data-role='header']").outerHeight() - $("div#search-box").outerHeight() - 2);
+      },
+
+      createPositionMarker: function () {
+        var currentPosition = new Location({
+          id: -100,
+          campus: null,
+          type: 'CurrentPosition',
+          name: 'You are here!',
+          coords: [
+            [this.model.get('location').lat(), this.model.get('location').lng()]
+          ],
+          directionAware: false,
+          pin: new google.maps.MarkerImage(
+              '../img/icons/position.png'
+          )
+        });
+
+        this.currentPositionPoint = new PointLocationView({
+          model: currentPosition,
+          gmap: this.map,
+          infoWindow: this.infoWindowView
+        });
       },
 
       /**
@@ -213,28 +209,14 @@ var MapView = Backbone.View.extend(
        * @param position Phonegap geolocation Position
        */
       updateCurrentPosition: function (position) {
+        if (typeof this.currentPositionPoint === 'undefined') {
+          this.createPositionMarker();
+          this.currentPositionPoint.render();
+        }
+
         this.currentPositionPoint.model.set('coords', [
           [position.coords.latitude, position.coords.longitude]
         ]);
-      },
-
-      /**
-       * Zoom the map to a new bound.
-       *
-       * @param {Map} bounds containing coordinates for minLat, maxLat, minLng, maxLat.
-       */
-      zoomToBounds: function (bounds) {
-        if (bounds.minLat !== 0 && bounds.maxLat !== 0 && bounds.minLng !== 0 && bounds.maxLng !== 0) {
-          var sw = new google.maps.LatLng(bounds.minLat, bounds.minLng);
-          var ne = new google.maps.LatLng(bounds.maxLat, bounds.maxLng);
-          var latLngBounds = new google.maps.LatLngBounds(sw, ne);
-          this.map.fitBounds(latLngBounds);
-
-          // force max zoom to be less than 17 (google map max is 21)
-          if (this.map.getZoom() > 17) {
-            this.map.setZoom(17);
-          }
-        }
       },
 
       /**
@@ -272,10 +254,10 @@ var MapView = Backbone.View.extend(
           var point = null;
           var shape = item.get('shape');
 
-          if (shape == "line") {
+          if (shape === "line") {
             point = new LineLocationView({ model: item, gmap: self.map, infoWindow: self.infoWindowView });
           }
-          else if (shape == "polygon") {
+          else if (shape === "polygon") {
             point = new PolygonLocationView({ model: item, gmap: self.map, infoWindow: self.infoWindowView });
           }
           else {
@@ -283,7 +265,7 @@ var MapView = Backbone.View.extend(
           }
 
           // if the polygon has an icon, draw it
-          if (item.get('hasIcon') && (shape == "line" || shape == "polygon")) {
+          if (item.get('hasIcon') && (shape === "line" || shape === "polygon")) {
             var iconPoint = new PointLocationView({
               model: item,
               gmap: self.map,
@@ -296,7 +278,7 @@ var MapView = Backbone.View.extend(
         });
 
         // If there is only one marker on the map, display the info window.
-        if (_.size(this.pointViews) == 1) {
+        if (_.size(this.pointViews) === 1) {
           var point = _.first(this.pointViews);
           point.openInfoWindow(point.model, point.marker);
         }
@@ -312,13 +294,13 @@ var MapView = Backbone.View.extend(
         var orig = this.currentPositionPoint.getPosition();
         var travMode = null;
 
-        if (travelMode == "walking") {
+        if (travelMode === "walking") {
           travMode = google.maps.DirectionsTravelMode.WALKING;
-        } else if (travelMode == "bicycling") {
+        } else if (travelMode === "bicycling") {
           travMode = google.maps.DirectionsTravelMode.BICYCLING;
-        } else if (travelMode == "driving") {
+        } else if (travelMode === "driving") {
           travMode = google.maps.DirectionsTravelMode.DRIVING;
-        } else if (travelMode == "publicTransp") {
+        } else if (travelMode === "publicTransp") {
           travMode = google.maps.DirectionsTravelMode.TRANSIT;
         }
 
@@ -338,4 +320,4 @@ var MapView = Backbone.View.extend(
             }
         );
       }
-    }); //-- End of Map view
+    });

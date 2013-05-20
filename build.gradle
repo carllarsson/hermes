@@ -31,6 +31,8 @@
 
 
 
+
+
 import java.nio.charset.Charset;
 
 import groovy.json.JsonSlurper
@@ -53,6 +55,9 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.HttpResponse
 import org.apache.http.util.EntityUtils
 import org.apache.tools.ant.filters.*
+
+import com.eriwen.gradle.js.JsMinifier
+import com.eriwen.gradle.css.CssMinifier
 
 version = "0.0.4"
 group = "se.su.it.handheld.app"
@@ -88,7 +93,7 @@ def phantomjs = {
 
 apply plugin: 'saga'
 apply plugin: 'js'
-apply plugin: 'jslint'
+apply plugin: 'css'
 
 /**
  * Wrapper
@@ -96,6 +101,26 @@ apply plugin: 'jslint'
 
 task wrapper(type: Wrapper) {
   gradleVersion = '1.5'
+}
+
+javascript.source {
+  prod {
+    js {
+      srcDir file('assets/www/')
+      include "**/*.js"
+      exclude '**/cordova*.js', '**/GAPlugin*.js', '**/*.min.js', '**/*-min.js', '**/spec/*'
+    }
+  }
+}
+
+css.source {
+  prod {
+    css {
+      srcDir file('assets/www')
+      include '**/*.css'
+      exclude '**/*.min.css', '**/spec/*'
+    }
+  }
 }
 
 /**
@@ -131,16 +156,50 @@ task buildSonarPom(type: Copy) {
   ])
 }
 
+task minify() {
+  doLast {
+    javascript.source.prod.js.files.each { File file ->
+      def dest = new File(file.absolutePath.replaceAll(/\.js$/, '.min.js'))
+
+      new JsMinifier().minifyJsFile(
+              [file] as Set<File>,
+              [] as Set<File>,
+              dest,
+              project.closure.compilerOptions,
+              project.closure.warningLevel,
+              project.closure.compilationLevel
+      )
+    }
+
+    css.source.prod.css.files.each { File file ->
+      def dest = new File(file.absolutePath.replaceAll(/\.css$/, '.min.css'))
+
+      new CssMinifier().minifyCssFile(
+              file,
+              dest,
+              project.yuicompressor.lineBreakPos
+      )
+    }
+  }
+}
+
 /**
- * JSLint
+ * JSHint
  */
 
-jslint {
-  inputDirs = ['assets/www/']
-  haltOnFailure = false
-  excludes = '**/cordova*.js,*/GAPlugin*.js,**/lib/**/*.js'
-  options = 'rhino'
-  formatterType = 'xml'
+task jshintTask(type: com.eriwen.gradle.js.tasks.JsHintTask) {
+  source = javascript.source.prod.js.files
+  dest = "${buildDir}/reports/jshint.xml"
+  reporter = 'checkstyle'
+}
+
+task csslintTask(type: com.eriwen.gradle.css.tasks.CssLintTask) {
+  source = css.source.prod.css.files
+  dest = "${buildDir}/reports/csslint.xml"
+  csslint {
+    format = 'lint-xml'
+    errors = []
+  }
 }
 
 /**
@@ -178,7 +237,7 @@ task jsdocjs(type: com.eriwen.gradle.js.tasks.JsDocTask) {
  * Phonegap integration
  */
 
-task buildTar(type: Tar) {
+task buildTar(type: Tar, dependsOn: minify) {
   archiveName archiveFile
   compression Compression.GZIP
   includes = [
@@ -190,13 +249,39 @@ task buildTar(type: Tar) {
           'www/spec',
           '**/cordova*.js'
   ]
+  exclude({
+    def ret = false
+    def name = it.file.name
+
+    if (name ==~ /.*\.js/ && !(name ==~ /GAPlugin\.js/ || name ==~ /.*(\.|-)min\.js/)) {
+      ret = true
+    }
+
+    if (name ==~ /.*\.css/ && !(name ==~ /.*\.min\.css/)) {
+      ret = true
+    }
+
+    ret
+  })
   from new File("assets/")
 
   eachFile { FileCopyDetails fileCopyDetails ->
     if (!fileCopyDetails.isDirectory()) {
       if (fileCopyDetails.name ==~ /.*\.html/) {
         fileCopyDetails.filter { String line ->
-          line.replaceAll(/cordova-.*\.js/, 'phonegap.js')
+          def ret = line.replaceAll(/cordova-.*\.js/, 'phonegap.js')
+
+          // Replace js includes with minified js file
+          if (ret ==~ /.*\.js.*/ && !(ret ==~ /.*phonegap\.js.*/ || ret ==~ /.*GAPlugin\.js.*/ || ret ==~ /.*(\.|-)min\.js.*/)) {
+            ret = ret.replaceAll(/\.js/, '.min.js')
+          }
+
+          // Replace css includes with minified css file
+          if (ret ==~ /.*\.css.*/ && !(ret ==~ /.*\.min\.css.*/)) {
+            ret = ret.replaceAll(/\.css/, '.min.css')
+          }
+
+          ret
         }
       } else if (fileCopyDetails.relativePath.pathString == "www${File.separator}config.xml") {
         fileCopyDetails.filter(ReplaceTokens, tokens: [
@@ -297,11 +382,11 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'org.kar:gradle-jslint-plugin:0.2'
     classpath 'org.apache.httpcomponents:httpclient:4.2.1'
     classpath 'org.apache.httpcomponents:httpmime:4.2.1'
     classpath 'com.github.timurstrekalov:gradle-saga-plugin:1.4.1'
-    classpath 'com.eriwen:gradle-js-plugin:1.1'
+    classpath 'com.eriwen:gradle-js-plugin:1.5.0'
+    classpath 'com.eriwen:gradle-css-plugin:1.2.1'
   }
 }
 

@@ -50,7 +50,7 @@ describe('Translations with i18n', function () {
     $('#page-home').replaceWith("<div id='stage'></div>");
   });
 
-  describe('when applying', function () {
+  describe('when applied', function () {
     it('should translate key', function () {
       $('#page-home > [data-role="content"]').find('span').i18n();
       expect($('#page-home > [data-role="content"]').find('span').text()).toEqual("buildings");

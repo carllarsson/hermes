@@ -16,7 +16,7 @@
     <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
     <sonar.javascript.jstestdriver.reportsfolder>build/reports/coverage/</sonar.javascript.jstestdriver.reportsfolder>
     <sonar.surefire.reportsPath>build/reports/tests/</sonar.surefire.reportsPath>
-    <sonar.exclusions>**/cordova*.js,**/GAPlugin.js,**/lib/**/*.js,**/spec/**/*.js</sonar.exclusions>
+    <sonar.exclusions>**/cordova*.js,**/GAPlugin.js,**/lib/**/*.js,**/spec/**/*.js,**/*.min.js,**/*-min.js</sonar.exclusions>
     <sonar.links.scm>git://git.it.su.se/git/hermes.git</sonar.links.scm>
   </properties>
 </project>

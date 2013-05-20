@@ -100,8 +100,6 @@ var AppView = Backbone.View.extend(
           self.mapView.replacePoints(self.model.locations);
         });
 
-        this.updateLocations();
-
         // Display a menu button
         if (showMenu) {
           this.menuPopupView = new MenuPopupView({
@@ -189,7 +187,7 @@ var AppView = Backbone.View.extend(
         this.startGPSPositioning();
       },
 
-       /**
+      /**
        * Handle changed zoom level.
        *
        * @param zoom the new zoom level.
@@ -237,7 +235,6 @@ var AppView = Backbone.View.extend(
        */
       startGPSPositioning: function () {
         if (navigator.geolocation) {
-          this.mapView.fadingMsg('Using device geolocation to get current position.');
           var self = this;
 
           // Get the current position or display error message
@@ -246,7 +243,6 @@ var AppView = Backbone.View.extend(
                 self.mapView.trigger('updateCurrentPosition', pos);
               },
               function (error) {
-                self.mapView.fadingMsg('Unable to get location');
               }
           );
 

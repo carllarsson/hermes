@@ -58,8 +58,15 @@ var MenuPopupView = Backbone.View.extend(
             .text('.menupopup-margin { margin-top: ' + Math.round(margin) + 'px; }')
             .appendTo('head');
         this.$el.parent().addClass('menupopup-margin');
+        this.$el.parent().addClass('menupopup');
 
         this.campuses.on("reset", this.updateCampuses, this);
+
+        // Popup state reflects in button styling
+        this.$el.on( "popupafteropen", this.buttonPress);
+        this.$el.on( "popupafterclose", this.buttonUnpress);
+
+
       },
 
       /** Registers events */
@@ -99,10 +106,21 @@ var MenuPopupView = Backbone.View.extend(
 
         // append all campuses
         this.campuses.each(function (campus) {
-          $("#menupopupList").append("<li id='campus-" + campus.get('id') + "' data-icon='false'><a href='javascript://nop'>" + campus.get('name') + "</a></li>");
+          $("#menupopupList").append("<li id='campus-" + campus.get('id') + "' data-icon='false' data-theme='b'><a href='javascript://nop'>" + campus.get('name') + "</a></li>");
         });
 
         $("#menupopupList").listview();
         $("#menupopupList").listview("refresh"); // jQuery mobile-ify the added elements
+      },
+
+      /**
+       * Changes button to pressed or unpressed
+       */
+      buttonPress: function () {
+        $(document).find("a#menubutton").addClass('selected');
+      },
+
+      buttonUnpress: function () {
+        $(document).find("a#menubutton").removeClass('selected');
       }
     });

@@ -94,6 +94,7 @@ describe('Map view', function () {
 
   describe('getDirections', function () {
     it('should use origin from current position', function () {
+      this.view.createPositionMarker();
       spyOn(this.view.currentPositionPoint, 'getPosition').andCallFake(function () {
         return 'foobar';
       });

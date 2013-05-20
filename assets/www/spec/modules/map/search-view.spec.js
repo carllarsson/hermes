@@ -78,18 +78,9 @@ describe('Search view', function () {
       spyOn(SearchView.prototype, "render");
 
       var appView = new AppView({ el: $('#page-map'), model: new AppModel() });
-      runs(function () {
-        appView.model.locations.fetch();
-        this.server.respond();
-      });
+      appView.searchView.collection.trigger('reset');
 
-      waitsFor(function () {
-        return appView.model.locations.length > 0;
-      }, "Waiting for returning call", 1000);
-
-      runs(function () {
-        expect(SearchView.prototype.render).toHaveBeenCalled();
-      });
+      expect(SearchView.prototype.render).toHaveBeenCalled();
     });
   });
 
@@ -137,8 +128,9 @@ describe('Search view', function () {
     it('should trigger custom filtering for each filter item', function () {
       spyOn(SearchView.prototype, "filterSearch");
       var appView = new AppView({ el: $('#page-map'), model: new AppModel() });
+
       runs(function () {
-        appView.model.locations.fetch();
+        appView.model.locations.fetch({reset: true});
         this.server.respond();
       });
 
@@ -159,7 +151,7 @@ describe('Search view', function () {
     it('should overwrite jquery mobiles filtering', function () {
       var appView = new AppView({ el: $('#page-map'), model: new AppModel() });
       runs(function () {
-        appView.model.locations.fetch();
+        appView.model.locations.fetch({reset: true});
         this.server.respond();
       });
 

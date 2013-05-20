@@ -36,7 +36,6 @@
   <title>Studentservice</title>
 
   <link rel="stylesheet" href="../css/jquery.mobile-1.3.1.min.css"/>
-  <link rel="stylesheet" href="../css/mobile.css"/>
   <link rel="stylesheet" href="../css/SU-ThemeA-B.css"/>
   <link rel="stylesheet" href="../css/SU-beta.css"/>
 
@@ -51,6 +50,7 @@
 </head>
 <body>
 
+<script src="../js/lib/fastclick/fastclick.min.js"></script>
 <script src="../js/lib/underscore-1.4.4-min.js"></script>
 <script src="../js/lib/backbone-1.0.0-min.js"></script>
 
@@ -73,7 +73,8 @@
 </script>
 
 
-<div id="studentservice_page" data-role="page" data-header="common/header" data-header-options="backbutton" data-prefetch>
+<div id="studentservice_page" data-role="page" data-header="common/header" data-header-options="backbutton"
+     data-prefetch>
   <div id="studentservice_view" data-role="content">
 
     <ul data-role="listview" data-inset="true">

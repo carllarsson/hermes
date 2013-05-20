@@ -52,9 +52,9 @@
   <script type="text/javascript" src="js/lib/backbone-1.0.0-min.js"></script>
   <script type="text/javascript" src="spec/lib/sinon-1.7.0.js"></script>
   <script type="text/javascript" src="spec/mocks/googlemaps-mocks.js"></script>
-  <script type="text/javascript" src="map/js/lib/jquery.ui.map/jquery.ui.map.js"></script>
-  <script type="text/javascript" src="map/js/lib/jquery.ui.map/jquery.ui.map.overlays.js"></script>
-  <script type="text/javascript" src="map/js/lib/jquery.ui.map/jquery.ui.map.services.js"></script>
+  <script type="text/javascript" src="map/js/lib/jquery.ui.map/jquery.ui.map.min.js"></script>
+  <script type="text/javascript" src="map/js/lib/jquery.ui.map/jquery.ui.map.overlays.min.js"></script>
+  <script type="text/javascript" src="map/js/lib/jquery.ui.map/jquery.ui.map.services.min.js"></script>
   <script type="text/javascript" src="js/lib/i18next-1.6.2.min.js"></script>
   <script src="cordova-2.5.0.js"></script>
 
@@ -84,8 +84,10 @@
 
   <!-- Map -->
   <script type="text/javascript" src="map/js/jst/info-window.js"></script>
-  <script type="text/javascript" src="map/js/models/location-model.js"></script>
   <script type="text/javascript" src="map/js/models/campus-model.js"></script>
+  <script type="text/javascript" src="map/js/collections/campuses-collection.js"></script>
+  <script type="text/javascript" src="map/js/models/location-model.js"></script>
+  <script type="text/javascript" src="map/js/collections/locations-collection.js"></script>
   <script type="text/javascript" src="map/js/models/app-model.js"></script>
   <script type="text/javascript" src="map/js/models/map-model.js"></script>
   <script src="map/js/views/generic-location-view.js"></script>
@@ -102,6 +104,7 @@
 
   <!-- Sukat -->
   <script type="text/javascript" src="sukatsearch/js/models/person-model.js"></script>
+  <script type="text/javascript" src="sukatsearch/js/collections/persons-collection.js"></script>
   <script type="text/javascript" src="sukatsearch/js/views/search-view.js"></script>
 
   <!-- TESTS -->

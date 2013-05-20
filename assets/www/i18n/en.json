@@ -77,6 +77,10 @@
     },
     "header": {
       "title": "Stockholm University"
+    },
+
+    "sisu": {
+      "link": "http://sisu.it.su.se/search/en"
     }
   },
   "studentService": {

@@ -103,3 +103,11 @@ $(document).on("click", "a[target=_blank][data-rel!=external]", function (event)
   $externalLinkDialog.trigger('create');
   $externalLinkDialog.popup('open');
 });
+
+/*
+ * Handles suppression of 300ms delay on click event
+ */
+
+$(document).ready(function () {
+  FastClick.attach(document.body);
+});
