@@ -1,6 +1,38 @@
+/*
+ * Copyright (c) 2013, IT Services, Stockholm University
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * Neither the name of Stockholm University nor the names of its contributors
+ * may be used to endorse or promote products derived from this software
+ * without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
 .text-align-center {
   text-align: center;
 }
+
 .text-align-right {
   text-align: right;
 }
@@ -10,6 +42,7 @@
   min-height: 200px;
   clear: both;
 }
+
 @media all and (min-width: 650px) {
   .content-secondary {
     text-align: left;
@@ -19,71 +52,86 @@
     padding: 1.5em 6% 3em 0;
     margin: 0;
   }
+
   .content-secondary {
     background: none;
     border-top: none;
   }
+
   .content-primary {
     width: 45%;
     float: right;
     margin-right: 1%;
     padding-right: 1%;
   }
+
   .content-primary ul:first-child {
     margin-top: 0;
   }
+
   .content-secondary ul.ui-listview, .content-secondary ul.ui-listview-inset {
     margin: 0;
   }
+
   .content-secondary ul.ui-listview .ui-li-divider, .content-secondary ul.ui-listview .ui-li {
     border-radius: 0px;
   }
+
   .content-secondary ul.ui-listview .ui-li {
     border-left: 0;
     border-right: 0;
   }
+
   .content-secondary h2 {
     position: absolute;
     left: -9999px;
   }
+
   .content-secondary .ui-li-divider {
     padding-top: 1em;
     padding-bottom: 1em;
   }
+
   .content-secondary {
     margin: 0;
     padding: 0;
   }
 
 }
-@media all and (min-width: 750px){
+
+@media all and (min-width: 750px) {
   .content-secondary {
     width: 34%;
   }
+
   .content-primary {
     width: 60%;
     padding-right: 1%;
   }
 }
 
-@media all and (min-width: 1200px){
+@media all and (min-width: 1200px) {
   .content-secondary {
     width: 30%;
-    padding-right:6%;
+    padding-right: 6%;
     margin: 0px 0 20px 5%;
   }
+
   .content-secondary ul {
     margin: 0;
   }
+
   .content-secondary {
     margin: 0;
     padding: 0;
   }
+
   .content-primary {
     width: 50%;
     margin-right: 5%;
     padding-right: 3%;
   }
+
   .content-primary {
     width: 60%;
   }

@@ -1,25 +1,58 @@
 <!DOCTYPE html>
+<!--
+  ~ Copyright (c) 2013, IT Services, Stockholm University
+  ~ All rights reserved.
+  ~
+  ~ Redistribution and use in source and binary forms, with or without
+  ~ modification, are permitted provided that the following conditions are met:
+  ~
+  ~ Redistributions of source code must retain the above copyright notice, this
+  ~ list of conditions and the following disclaimer.
+  ~
+  ~ Redistributions in binary form must reproduce the above copyright notice,
+  ~ this list of conditions and the following disclaimer in the documentation
+  ~ and/or other materials provided with the distribution.
+  ~
+  ~ Neither the name of Stockholm University nor the names of its contributors
+  ~ may be used to endorse or promote products derived from this software
+  ~ without specific prior written permission.
+  ~
+  ~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  ~ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  ~ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  ~ ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+  ~ LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  ~ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  ~ SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  ~ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  ~ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  ~ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  ~ POSSIBILITY OF SUCH DAMAGE.
+  -->
+
 <html>
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="content-type">
   <title>Studentservice</title>
 
-  <link rel="stylesheet" href="../css/jquery.mobile-1.3.0.min.css"/>
+  <link rel="stylesheet" href="../css/jquery.mobile-1.3.1.min.css"/>
   <link rel="stylesheet" href="../css/mobile.css"/>
+  <link rel="stylesheet" href="../css/SU-ThemeA-B.css"/>
+  <link rel="stylesheet" href="../css/SU-beta.css"/>
 
   <script type="text/javascript" charset="utf-8" src="../cordova-2.5.0.js"></script>
   <script type="text/javascript" charset="utf-8" src="../GAPlugin.js"></script>
 
   <script src="../js/lib/jquery-1.8.2.min.js"></script>
-  <script src="../js/lib/jquery.mobile-1.3.0.min.js"></script>
+  <script src="../js/lib/jquery.mobile-1.3.1.min.js"></script>
 
   <!-- maximum scale added to stop zoom on select controls -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 </head>
 <body>
 
-<script src="../js/lib/underscore-1.3.3-min.js"></script>
-<script src="../js/lib/backbone-0.9.2-min.js"></script>
+<script src="../js/lib/underscore-1.4.4-min.js"></script>
+<script src="../js/lib/backbone-1.0.0-min.js"></script>
 
 <!-- Global config file -->
 <script src="../js/config.js"></script>
@@ -27,10 +60,10 @@
 <!-- Default javascripts -->
 <script src="../js/default.js"></script>
 <script src="../js/jst/common.js"></script>
-<script src="../js/lib/i18next-1.5.8.min.js"></script>
+<script src="../js/lib/i18next-1.6.2.min.js"></script>
 <script src="../js/locale.js"></script>
 
-<script src="js/views/student-view.js"></script>
+<script src="js/views/student-service-view.js"></script>
 
 <script type="text/javascript">
   $(document).ready(function () {
@@ -40,7 +73,7 @@
 </script>
 
 
-<div id="studentservice_page" data-role="page" data-header="common/header" data-header-options="backbutton">
+<div id="studentservice_page" data-role="page" data-header="common/header" data-header-options="backbutton" data-prefetch>
   <div id="studentservice_view" data-role="content">
 
     <ul data-role="listview" data-inset="true">

@@ -78,6 +78,7 @@ jasmine.HtmlReporter = function (_doc) {
 
     createReporterDom(runner.env.versionString());
     doc.body.appendChild(dom.reporter);
+    setExceptionHandling();
 
     reporterView = new jasmine.HtmlReporter.ReporterView(dom);
     reporterView.addSpecs(specs, self.specFilter);
@@ -131,7 +132,7 @@ jasmine.HtmlReporter = function (_doc) {
       }
 
       var paramMap = [];
-      var params = doc.location.search.substring(1).split('&');
+      var params = jasmine.HtmlReporter.parameters(doc);
 
       for (var i = 0; i < params.length; i++) {
         var p = params[i].split('=');
@@ -145,18 +146,81 @@ jasmine.HtmlReporter = function (_doc) {
   }
 
   function createReporterDom(version) {
-    dom.reporter = self.createDom('div', { id:'HTMLReporter', className:'jasmine_reporter' },
-        dom.banner = self.createDom('div', { className:'banner' },
-            self.createDom('span', { className:'title' }, "Jasmine "),
-            self.createDom('span', { className:'version' }, version)),
+    dom.reporter = self.createDom('div', { id: 'HTMLReporter', className: 'jasmine_reporter' },
+        dom.banner = self.createDom('div', { className: 'banner' },
+            self.createDom('span', { className: 'title' }, "Jasmine "),
+            self.createDom('span', { className: 'version' }, version)),
 
-        dom.symbolSummary = self.createDom('ul', {className:'symbolSummary'}),
-        dom.alert = self.createDom('div', {className:'alert'}),
-        dom.results = self.createDom('div', {className:'results'},
-            dom.summary = self.createDom('div', { className:'summary' }),
-            dom.details = self.createDom('div', { id:'details' }))
+        dom.symbolSummary = self.createDom('ul', {className: 'symbolSummary'}),
+        dom.alert = self.createDom('div', {className: 'alert'},
+            self.createDom('span', { className: 'exceptions' },
+                self.createDom('label', { className: 'label', 'for': 'no_try_catch' }, 'No try/catch'),
+                self.createDom('input', { id: 'no_try_catch', type: 'checkbox' }))),
+        dom.results = self.createDom('div', {className: 'results'},
+            dom.summary = self.createDom('div', { className: 'summary' }),
+            dom.details = self.createDom('div', { id: 'details' }))
     );
   }
+
+  function noTryCatch() {
+    return window.location.search.match(/catch=false/);
+  }
+
+  function searchWithCatch() {
+    var params = jasmine.HtmlReporter.parameters(window.document);
+    var removed = false;
+    var i = 0;
+
+    while (!removed && i < params.length) {
+      if (params[i].match(/catch=/)) {
+        params.splice(i, 1);
+        removed = true;
+      }
+      i++;
+    }
+    if (jasmine.CATCH_EXCEPTIONS) {
+      params.push("catch=false");
+    }
+
+    return params.join("&");
+  }
+
+  function setExceptionHandling() {
+    var chxCatch = document.getElementById('no_try_catch');
+
+    if (noTryCatch()) {
+      chxCatch.setAttribute('checked', true);
+      jasmine.CATCH_EXCEPTIONS = false;
+    }
+    chxCatch.onclick = function () {
+      window.location.search = searchWithCatch();
+    };
+  }
+};
+jasmine.HtmlReporter.parameters = function (doc) {
+  var paramStr = doc.location.search.substring(1);
+  var params = [];
+
+  if (paramStr.length > 0) {
+    params = paramStr.split('&');
+  }
+  return params;
+}
+jasmine.HtmlReporter.sectionLink = function (sectionName) {
+  var link = '?';
+  var params = [];
+
+  if (sectionName) {
+    params.push('spec=' + encodeURIComponent(sectionName));
+  }
+  if (!jasmine.CATCH_EXCEPTIONS) {
+    params.push("catch=false");
+  }
+  if (params.length > 0) {
+    link += params.join("&");
+  }
+
+  return link;
 };
 jasmine.HtmlReporterHelpers.addHelpers(jasmine.HtmlReporter);
 jasmine.HtmlReporter.ReporterView = function (dom) {
@@ -168,10 +232,10 @@ jasmine.HtmlReporter.ReporterView = function (dom) {
   this.skippedCount = 0;
 
   this.createResultsMenu = function () {
-    this.resultsMenu = this.createDom('span', {className:'resultsMenu bar'},
-        this.summaryMenuItem = this.createDom('a', {className:'summaryMenuItem', href:"#"}, '0 specs'),
+    this.resultsMenu = this.createDom('span', {className: 'resultsMenu bar'},
+        this.summaryMenuItem = this.createDom('a', {className: 'summaryMenuItem', href: "#"}, '0 specs'),
         ' | ',
-        this.detailsMenuItem = this.createDom('a', {className:'detailsMenuItem', href:"#"}, '0 failing'));
+        this.detailsMenuItem = this.createDom('a', {className: 'detailsMenuItem', href: "#"}, '0 failing'));
 
     this.summaryMenuItem.onclick = function () {
       dom.reporter.className = dom.reporter.className.replace(/ showDetails/g, '');
@@ -186,8 +250,8 @@ jasmine.HtmlReporter.ReporterView = function (dom) {
     this.totalSpecCount = specs.length;
 
     this.views = {
-      specs:{},
-      suites:{}
+      specs: {},
+      suites: {}
     };
 
     for (var i = 0; i < specs.length; i++) {
@@ -242,14 +306,14 @@ jasmine.HtmlReporter.ReporterView = function (dom) {
 
     // currently running UI
     if (isUndefined(this.runningAlert)) {
-      this.runningAlert = this.createDom('a', {href:"?", className:"runningAlert bar"});
+      this.runningAlert = this.createDom('a', { href: jasmine.HtmlReporter.sectionLink(), className: "runningAlert bar" });
       dom.alert.appendChild(this.runningAlert);
     }
     this.runningAlert.innerHTML = "Running " + this.completeSpecCount + " of " + specPluralizedFor(this.totalSpecCount);
 
     // skipped specs UI
     if (isUndefined(this.skippedAlert)) {
-      this.skippedAlert = this.createDom('a', {href:"?", className:"skippedAlert bar"});
+      this.skippedAlert = this.createDom('a', { href: jasmine.HtmlReporter.sectionLink(), className: "skippedAlert bar" });
     }
 
     this.skippedAlert.innerHTML = "Skipping " + this.skippedCount + " of " + specPluralizedFor(this.totalSpecCount) + " - run all";
@@ -260,13 +324,13 @@ jasmine.HtmlReporter.ReporterView = function (dom) {
 
     // passing specs UI
     if (isUndefined(this.passedAlert)) {
-      this.passedAlert = this.createDom('span', {href:"?", className:"passingAlert bar"});
+      this.passedAlert = this.createDom('span', { href: jasmine.HtmlReporter.sectionLink(), className: "passingAlert bar" });
     }
     this.passedAlert.innerHTML = "Passing " + specPluralizedFor(this.passedCount);
 
     // failing specs UI
     if (isUndefined(this.failedAlert)) {
-      this.failedAlert = this.createDom('span', {href:"?", className:"failingAlert bar"});
+      this.failedAlert = this.createDom('span', {href: "?", className: "failingAlert bar"});
     }
     this.failedAlert.innerHTML = "Failing " + specPluralizedFor(this.failedCount);
 
@@ -286,12 +350,12 @@ jasmine.HtmlReporter.ReporterView = function (dom) {
     this.skippedAlert.innerHTML = "Ran " + this.runningSpecCount + " of " + specPluralizedFor(this.totalSpecCount) + " - run all";
 
     if (this.failedCount === 0) {
-      dom.alert.appendChild(this.createDom('span', {className:'passingAlert bar'}, "Passing " + specPluralizedFor(this.passedCount)));
+      dom.alert.appendChild(this.createDom('span', {className: 'passingAlert bar'}, "Passing " + specPluralizedFor(this.passedCount)));
     } else {
       showDetails();
     }
 
-    dom.banner.appendChild(this.createDom('span', {className:'duration'}, "finished in " + ((new Date().getTime() - this.startedAt.getTime()) / 1000) + "s"));
+    dom.banner.appendChild(this.createDom('span', {className: 'duration'}, "finished in " + ((new Date().getTime() - this.startedAt.getTime()) / 1000) + "s"));
   };
 
   return this;
@@ -328,22 +392,22 @@ jasmine.HtmlReporter.SpecView = function (spec, dom, views) {
   this.dom = dom;
   this.views = views;
 
-  this.symbol = this.createDom('li', { className:'pending' });
+  this.symbol = this.createDom('li', { className: 'pending' });
   this.dom.symbolSummary.appendChild(this.symbol);
 
-  this.summary = this.createDom('div', { className:'specSummary' },
+  this.summary = this.createDom('div', { className: 'specSummary' },
       this.createDom('a', {
-        className:'description',
-        href:'?spec=' + encodeURIComponent(this.spec.getFullName()),
-        title:this.spec.getFullName()
+        className: 'description',
+        href: jasmine.HtmlReporter.sectionLink(this.spec.getFullName()),
+        title: this.spec.getFullName()
       }, this.spec.description)
   );
 
-  this.detail = this.createDom('div', { className:'specDetail' },
+  this.detail = this.createDom('div', { className: 'specDetail' },
       this.createDom('a', {
-        className:'description',
-        href:'?spec=' + encodeURIComponent(this.spec.getFullName()),
-        title:this.spec.getFullName()
+        className: 'description',
+        href: '?spec=' + encodeURIComponent(this.spec.getFullName()),
+        title: this.spec.getFullName()
       }, this.spec.getFullName())
   );
 };
@@ -379,18 +443,18 @@ jasmine.HtmlReporter.SpecView.prototype.appendFailureDetail = function () {
   this.detail.className += ' ' + this.status();
 
   var resultItems = this.spec.results().getItems();
-  var messagesDiv = this.createDom('div', { className:'messages' });
+  var messagesDiv = this.createDom('div', { className: 'messages' });
 
   for (var i = 0; i < resultItems.length; i++) {
     var result = resultItems[i];
 
     if (result.type == 'log') {
-      messagesDiv.appendChild(this.createDom('div', {className:'resultMessage log'}, result.toString()));
+      messagesDiv.appendChild(this.createDom('div', {className: 'resultMessage log'}, result.toString()));
     } else if (result.type == 'expect' && result.passed && !result.passed()) {
-      messagesDiv.appendChild(this.createDom('div', {className:'resultMessage fail'}, result.message));
+      messagesDiv.appendChild(this.createDom('div', {className: 'resultMessage fail'}, result.message));
 
       if (result.trace.stack) {
-        messagesDiv.appendChild(this.createDom('div', {className:'stackTrace'}, result.trace.stack));
+        messagesDiv.appendChild(this.createDom('div', {className: 'stackTrace'}, result.trace.stack));
       }
     }
   }
@@ -407,8 +471,8 @@ jasmine.HtmlReporter.SuiteView = function (suite, dom, views) {
   this.dom = dom;
   this.views = views;
 
-  this.element = this.createDom('div', { className:'suite' },
-      this.createDom('a', { className:'description', href:'?spec=' + encodeURIComponent(this.suite.getFullName()) }, this.suite.description)
+  this.element = this.createDom('div', { className: 'suite' },
+      this.createDom('a', { className: 'description', href: jasmine.HtmlReporter.sectionLink(this.suite.getFullName()) }, this.suite.description)
   );
 
   this.appendToSummary(this.suite, this.element);
@@ -461,24 +525,24 @@ jasmine.TrivialReporter.prototype.createDom = function (type, attrs, childrenVar
 jasmine.TrivialReporter.prototype.reportRunnerStarting = function (runner) {
   var showPassed, showSkipped;
 
-  this.outerDiv = this.createDom('div', { id:'TrivialReporter', className:'jasmine_reporter' },
-      this.createDom('div', { className:'banner' },
-          this.createDom('div', { className:'logo' },
-              this.createDom('span', { className:'title' }, "Jasmine"),
-              this.createDom('span', { className:'version' }, runner.env.versionString())),
-          this.createDom('div', { className:'options' },
+  this.outerDiv = this.createDom('div', { id: 'TrivialReporter', className: 'jasmine_reporter' },
+      this.createDom('div', { className: 'banner' },
+          this.createDom('div', { className: 'logo' },
+              this.createDom('span', { className: 'title' }, "Jasmine"),
+              this.createDom('span', { className: 'version' }, runner.env.versionString())),
+          this.createDom('div', { className: 'options' },
               "Show ",
-              showPassed = this.createDom('input', { id:"__jasmine_TrivialReporter_showPassed__", type:'checkbox' }),
-              this.createDom('label', { "for":"__jasmine_TrivialReporter_showPassed__" }, " passed "),
-              showSkipped = this.createDom('input', { id:"__jasmine_TrivialReporter_showSkipped__", type:'checkbox' }),
-              this.createDom('label', { "for":"__jasmine_TrivialReporter_showSkipped__" }, " skipped")
+              showPassed = this.createDom('input', { id: "__jasmine_TrivialReporter_showPassed__", type: 'checkbox' }),
+              this.createDom('label', { "for": "__jasmine_TrivialReporter_showPassed__" }, " passed "),
+              showSkipped = this.createDom('input', { id: "__jasmine_TrivialReporter_showSkipped__", type: 'checkbox' }),
+              this.createDom('label', { "for": "__jasmine_TrivialReporter_showSkipped__" }, " skipped")
           )
       ),
 
-      this.runnerDiv = this.createDom('div', { className:'runner running' },
-          this.createDom('a', { className:'run_spec', href:'?' }, "run all"),
+      this.runnerDiv = this.createDom('div', { className: 'runner running' },
+          this.createDom('a', { className: 'run_spec', href: '?' }, "run all"),
           this.runnerMessageSpan = this.createDom('span', {}, "Running..."),
-          this.finishedAtSpan = this.createDom('span', { className:'finished-at' }, ""))
+          this.finishedAtSpan = this.createDom('span', { className: 'finished-at' }, ""))
   );
 
   this.document.body.appendChild(this.outerDiv);
@@ -486,9 +550,9 @@ jasmine.TrivialReporter.prototype.reportRunnerStarting = function (runner) {
   var suites = runner.suites();
   for (var i = 0; i < suites.length; i++) {
     var suite = suites[i];
-    var suiteDiv = this.createDom('div', { className:'suite' },
-        this.createDom('a', { className:'run_spec', href:'?spec=' + encodeURIComponent(suite.getFullName()) }, "run"),
-        this.createDom('a', { className:'description', href:'?spec=' + encodeURIComponent(suite.getFullName()) }, suite.description));
+    var suiteDiv = this.createDom('div', { className: 'suite' },
+        this.createDom('a', { className: 'run_spec', href: '?spec=' + encodeURIComponent(suite.getFullName()) }, "run"),
+        this.createDom('a', { className: 'description', href: '?spec=' + encodeURIComponent(suite.getFullName()) }, suite.description));
     this.suiteDivs[suite.id] = suiteDiv;
     var parentDiv = this.outerDiv;
     if (suite.parentSuite) {
@@ -532,7 +596,7 @@ jasmine.TrivialReporter.prototype.reportRunnerResults = function (runner) {
   }
   var message = "" + specCount + " spec" + (specCount == 1 ? "" : "s" ) + ", " + results.failedCount + " failure" + ((results.failedCount == 1) ? "" : "s");
   message += " in " + ((new Date().getTime() - this.startedAt.getTime()) / 1000) + "s";
-  this.runnerMessageSpan.replaceChild(this.createDom('a', { className:'description', href:'?'}, message), this.runnerMessageSpan.firstChild);
+  this.runnerMessageSpan.replaceChild(this.createDom('a', { className: 'description', href: '?'}, message), this.runnerMessageSpan.firstChild);
 
   this.finishedAtSpan.appendChild(document.createTextNode("Finished at " + new Date().toString()));
 };
@@ -558,27 +622,27 @@ jasmine.TrivialReporter.prototype.reportSpecResults = function (spec) {
   if (results.skipped) {
     status = 'skipped';
   }
-  var specDiv = this.createDom('div', { className:'spec ' + status },
-      this.createDom('a', { className:'run_spec', href:'?spec=' + encodeURIComponent(spec.getFullName()) }, "run"),
+  var specDiv = this.createDom('div', { className: 'spec ' + status },
+      this.createDom('a', { className: 'run_spec', href: '?spec=' + encodeURIComponent(spec.getFullName()) }, "run"),
       this.createDom('a', {
-        className:'description',
-        href:'?spec=' + encodeURIComponent(spec.getFullName()),
-        title:spec.getFullName()
+        className: 'description',
+        href: '?spec=' + encodeURIComponent(spec.getFullName()),
+        title: spec.getFullName()
       }, spec.description));
 
 
   var resultItems = results.getItems();
-  var messagesDiv = this.createDom('div', { className:'messages' });
+  var messagesDiv = this.createDom('div', { className: 'messages' });
   for (var i = 0; i < resultItems.length; i++) {
     var result = resultItems[i];
 
     if (result.type == 'log') {
-      messagesDiv.appendChild(this.createDom('div', {className:'resultMessage log'}, result.toString()));
+      messagesDiv.appendChild(this.createDom('div', {className: 'resultMessage log'}, result.toString()));
     } else if (result.type == 'expect' && result.passed && !result.passed()) {
-      messagesDiv.appendChild(this.createDom('div', {className:'resultMessage fail'}, result.message));
+      messagesDiv.appendChild(this.createDom('div', {className: 'resultMessage fail'}, result.message));
 
       if (result.trace.stack) {
-        messagesDiv.appendChild(this.createDom('div', {className:'stackTrace'}, result.trace.stack));
+        messagesDiv.appendChild(this.createDom('div', {className: 'stackTrace'}, result.trace.stack));
       }
     }
   }

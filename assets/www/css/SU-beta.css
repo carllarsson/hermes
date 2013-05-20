@@ -1,0 +1,250 @@
+/*
+ * Copyright (c) 2013, IT Services, Stockholm University
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * Neither the name of Stockholm University nor the names of its contributors
+ * may be used to endorse or promote products derived from this software
+ * without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/****************
+ ** Graphic design styling
+ jQuery Mobile
+ ****
+ Font: Verdana, Arial, Helvetica, sans-serif
+ ****
+ Colors:
+ SU blue #002F5F
+ button blue #4d6e9d
+ turquoise #d7e0eb
+*******
+ Guide lines:
+ - Use tag and classes for styling- not IDs
+ - Be specific
+ ***********/
+
+/*************
+ ** General
+ ***********/
+.ui-btn-text {
+    font-weight:normal;
+}
+
+/*themeroller bug fix - black icons
+http://stackoverflow.com/questions/12847081/jquery-mobile-icons-white-instead-black-on-android
+*/
+
+.ui-icon-plus, .ui-icon-minus, .ui-icon-delete, .ui-icon-arrow-r,
+.ui-icon-arrow-l, .ui-icon-arrow-u, .ui-icon-arrow-d, .ui-icon-check,
+.ui-icon-gear, .ui-icon-refresh, .ui-icon-forward, .ui-icon-back,
+.ui-icon-grid, .ui-icon-star, .ui-icon-alert, .ui-icon-info, .ui-icon-home, .ui-icon-bars, .ui-icon-edit,
+.ui-icon-search, .ui-icon-searchfield:after,
+.ui-icon-checkbox-off, .ui-icon-checkbox-on, .ui-icon-radio-off, .ui-icon-radio-on {
+    background-image: url(images/icons-36-black.png) !important;
+    -moz-background-size: 864px 18px;
+    -o-background-size: 864px 18px;
+    -webkit-background-size: 864px 18px;
+    background-size: 864px 18px;
+}
+
+/*************
+ ** Header
+ ***********/
+
+.menubutton.ui-btn-corner-all > span.ui-btn-inner{
+   padding: 0 6px;
+   font-size: 23px;
+   font-weight: bold;
+   text-shadow:  0 -2px 0 rgba(51,61,74, 0.5), 0 -1px 0 rgba(255,255,255, 0.5);
+}
+
+.ui-header .ui-btn-inner, .ui-footer .ui-btn-inner, .ui-mini .ui-btn-inner.backbutton {
+    padding: 7px 7px 0.5em 2px;
+}
+
+.ui-header .ui-btn-left.backbutton {
+
+    -moz-border-radius-topleft: 0.2em;
+    -webkit-border-top-left-radius: 0.2em;
+    border-top-left-radius: 0.2em;
+    -moz-border-radius-topright: 0.6em;
+    -webkit-border-top-right-radius: 0.6em;
+    border-top-right-radius: 0.6em;
+    -moz-border-radius-bottomright: 0.6em;
+    -webkit-border-bottom-right-radius: 0.6em;
+    border-bottom-right-radius: 0.6em;
+    -moz-border-radius-bottomleft: 0.15em;
+    -webkit-border-bottom-left-radius: 0.15em;
+    border-bottom-left-radius: 0.15em;
+
+    margin-left: 10px;
+    height: 32px;
+}
+
+.ui-header .ui-btn-left.backbutton,
+.ui-header .ui-btn-right.menubutton {
+    height: 32px;
+
+}
+
+.backbutton .object-container {
+    width: 18px;
+    height: 19px;
+}
+
+.backbutton:before {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+
+    background: #4D6E9D;
+    background: -webkit-linear-gradient(45deg, #364E6F 0%, #638DCA 105%) repeat scroll 0 0 transparent;
+    background: -moz-linear-gradient(45deg, #364E6F 0%, #638DCA 105%) repeat scroll 0 0 transparent;
+    background: -o-linear-gradient(45deg, #364E6F 0%, #638DCA 105%) repeat scroll 0 0 transparent;
+    background: -ms-linear-gradient(45deg, #364E6F 0%, #638DCA 105%) repeat scroll 0 0 transparent;
+    background: linear-gradient(45deg, #364E6F 0%, #638DCA 105%) repeat scroll 0 0 transparent;
+
+    -webkit-box-shadow: -1px 0px 0 #4d6d8f,
+                        inset 0px 2px 0 rgba(255, 255, 255, 0.2);
+    box-shadow: -1px 0px 0 #4d6d8f,
+                inset 0px 2px 0 rgba(255, 255, 255, 0.2);
+
+    border-radius: 3px 0 2px 1px;
+    border-left:1px solid #375075;
+    border-top:1px solid #375075;
+    border-right: none;
+    border-bottom: none;
+
+    content: "";
+    display: block;
+    height: 23px;
+    left: -11px;
+    position: absolute;
+    top: 5px;
+
+    -webkit-transform: rotate(-45deg) scale(0.86) skew(-9deg, -9deg);
+    -moz-transform: rotate(-45deg) scale(0.86) skew(-9deg, -9deg);
+    -ms-transform: rotate(-45deg) scale(0.86) skew(-9deg, -9deg);
+    -o-transform: rotate(-45deg) scale(0.86) skew(-9deg, -9deg);
+    transform: rotate(-45deg) scale(0.86) skew(-9deg, -9deg);
+
+    width: 21px;
+}
+
+.backbutton:hover,
+.backbutton:focus,
+.backbutton:visited,
+.backbutton:active {
+
+  background: -webkit-linear-gradient(0deg, #dae2ec 0%, #dae2ec 0%) repeat scroll 0 0 transparent;
+  background: -moz-linear-gradient(0deg, #dae2ec 0%, #dae2ec 0%) repeat scroll 0 0 transparent;
+  background: -o-linear-gradient(0deg, #dae2ec 0%, #dae2ec 0%) repeat scroll 0 0 transparent;
+  background: -ms-linear-gradient(0deg, #dae2ec 0%, #dae2ec 0%) repeat scroll 0 0 transparent;
+  background: linear-gradient(0deg, #dae2ec 0%, #dae2ec 0%) repeat scroll 0 0 transparent;
+}
+
+.backbutton:hover:before,
+.backbutton:focus:before,
+.backbutton:visited:before,
+.backbutton:active:before
+{
+    background: #dae2ec;
+    background: -webkit-linear-gradient(0deg, #dae2ec 0%, #dae2ec 0%) repeat scroll 0 0 transparent;
+    background: -moz-linear-gradient(0deg, #dae2ec 0%, #dae2ec 0%) repeat scroll 0 0 transparent;
+    background: -o-linear-gradient(0deg, #dae2ec 0%, #dae2ec 0%) repeat scroll 0 0 transparent;
+    background: -ms-linear-gradient(0deg, #dae2ec 0%, #dae2ec 0%) repeat scroll 0 0 transparent;
+    background: linear-gradient(0deg, #dae2ec 0%, #dae2ec 0%) repeat scroll 0 0 transparent;
+
+    border-left:1px solid #a4b2bd;
+    border-top:1px solid #a4b2bd;
+}
+/*************
+ ** Search View
+ ***********/
+div.search-box {
+    margin: 15px 0 0;
+    background-color: #d7e0eb;
+    border-bottom: 1px solid #a0aeba;
+}
+
+div.search-box form {
+    border: none;
+}
+
+div.search-box  .ui-input-search.ui-shadow-inset {
+    margin: 8px 10px;
+    background-color: white;
+    border-bottom: 1px solid rgba(175,175,175, 0.5);
+    border-radius: 1em 1em 1em 1em;
+
+    -webkit-box-shadow: inset 0 2px 4px rgba(35, 31, 32, 0.34),
+                        inset 0 1px 0 rgba(99, 99, 99, 0.5),
+                        0 2px 0 rgba(237, 241, 246, 0.4),
+                        inset 0 1px 0 rgba(175, 175, 175, 0.4);
+    -moz-box-shadow:    inset 0 2px 4px rgba(35, 31, 32, 0.34),
+                        inset 0 1px 0 rgba(99, 99, 99, 0.5),
+                        0 2px 0 rgba(237, 241, 246, 0.4),
+                        inset 0 1px 0 rgba(175, 175, 175, 0.4);
+    box-shadow:         inset 0 2px 4px rgba(35, 31, 32, 0.34),
+                        inset 0 1px 0 rgba(99, 99, 99, 0.5),
+                        0 2px 0 rgba(237, 241, 246, 0.4),
+                        inset 0 1px 0 rgba(175, 175, 175, 0.4);
+
+}
+
+#search-box .ui-input-clear {
+    border: none;
+    border-radius: 1em;
+    margin-top: -11px;
+}
+
+/*The search view list*/
+div.search-box ul {
+    margin-top: 16px;
+}
+
+.ui-listview-inset .ui-li {
+    border-left-width: 0;
+    border-right-width: 0;
+}
+div.search-box ul li.ui-li-divider {
+    font-size: 10px;
+    padding: 0.1em 15px;
+    border-bottom: none;
+    color: #A4B2BD;
+}
+
+div.search-box .ui-btn-up-b {
+    border: none;
+    border-top: 1px solid #A4B2BD;
+    background-color: #ffffff;
+}
+
+div.search-box .ui-btn-hover-b,
+div.search-box .ui-btn-hover-b .ui-last-child {
+    border: none;
+    border-top: 1px solid #A4B2BD;
+}

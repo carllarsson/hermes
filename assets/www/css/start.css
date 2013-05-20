@@ -1,0 +1,120 @@
+/*
+ * Copyright (c) 2013, IT Services, Stockholm University
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * Neither the name of Stockholm University nor the names of its contributors
+ * may be used to endorse or promote products derived from this software
+ * without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/****************
+ ** Graphic design styling
+ jQuery Mobile
+ ****
+ Font: Verdana, Arial, Helvetica, sans-serif
+ ****
+ Colors:
+ SU blue #002F5F
+ button blue #4d6e9d
+ turquoise #d7e0eb
+*******
+ Guide lines:
+ - Use tag and classes for styling- not IDs
+ - Be specific
+ ***********/
+@font-face {
+    font-family: TheSansB-W5Plain;
+    src: url("fonts/LF-TheSansB-CE-1.1/TheSansB-W5Plain.otf") format("opentype");
+}
+
+@font-face {
+    font-family: TheSansB-W6SemiBold;
+    src: url("fonts/LF-TheSansB-CE-1.1/TheSansB-W6SemiBold.otf") format("opentype");
+}
+
+.ui-header.nobuttons .ui-title {
+    font-size: 25px;
+    margin: 1px 0 4px 1px;
+    font-family: TheSansB-W5Plain;
+    font-size: 28px;
+ }
+
+.ui-header.nobuttons {
+    border-bottom: 1px solid #000;
+}
+
+.ui-body-c {
+    background: #d7e0eb;
+}
+
+.button-container {
+    position: relative;
+    width: 59%;
+    margin: 0 auto 20px auto;
+    padding: 4px 0px;
+    background: #003063;
+    -moz-box-shadow: 0px 2px 2px 0px rgba(0, 85, 175, 0.4), 0px 4px 4px 0px rgba(255, 255, 255, 0.3) inset;
+    box-shadow: 0px 2px 2px 0px rgba(0, 85, 175, 0.4), 0px 4px 4px 0px rgba(255, 255, 255, 0.3) inset;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 2px solid #0d54a0;
+    background: #002e5f; /* Old browsers */
+    background: -moz-linear-gradient(top, #002e5f 0%, #003a78 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#002e5f), color-stop(100%,#003a78)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #002e5f 0%,#003a78 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #002e5f 0%,#003a78 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #002e5f 0%,#003a78 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #002e5f 0%,#003a78 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#002e5f', endColorstr='#003a78',GradientType=0 ); /* IE6-9 */
+}
+
+.button-container .glare {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: -moz-linear-gradient(top,  rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.2)), color-stop(50%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 50%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 50%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 50%,rgba(255,255,255,0) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 50%,rgba(255,255,255,0) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+}
+
+.button-grid .button-container img {
+    width: 80% !important;
+    height: auto !important;
+}
+
+.button-grid span {
+    color: #363636;
+    font-family: TheSansB-W6SemiBold;
+    font-size: 13px;
+    /* Quick fix instead of using !important to override index.css styling
+       TODO: Remove redundant styling
+    */
+    display: block;
+    margin-top: -15px;
+}
