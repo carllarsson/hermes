@@ -51,10 +51,10 @@ describe('Line location view', function () {
       });
 
       expect(google.maps.Polyline).toHaveBeenCalledWith({
-        strokeColor: "#000000",
+        strokeColor: "#002F5F",
         strokeOpacity: 0.8,
-        strokeWeight: 3,
-        fillColor: "#00ff00",
+        strokeWeight: 2,
+        fillColor: "#A1D8E0",
         fillOpacity: 0.35,
         visible: true,
         poiType: this.view.model.getPoiType(),

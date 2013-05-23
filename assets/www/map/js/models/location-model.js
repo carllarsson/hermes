@@ -73,22 +73,8 @@ var Location = Backbone.Model.extend(
       },
 
       getPin: function () {
-        var pin = null;
-        switch (this.get('type')) {
-          case 'parking':
-            pin = JST['map/icons/parking'];
-            break;
-          case 'handicap_parking':
-            pin = JST['map/icons/handicap_parking'];
-            break;
-          case 'entrance':
-            pin = JST['map/icons/entrance'];
-            break;
-          default:
-            pin = JST['map/icons/default'];
-        }
-
-        return pin;
+        var pin = JST['map/icons/' + this.get('type')];
+        return pin ? pin : JST['map/icons/default'];
       },
 
       /**
