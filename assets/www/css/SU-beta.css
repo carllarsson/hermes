@@ -320,9 +320,6 @@ div.search-box {
   margin: 15px 0 0;
   background-color: #d7e0eb;
   border-bottom: 1px solid #a0aeba;
-  position: absolute;
-  top: 27px; right:0; left:0;
-  z-index: 2;
 }
 
 div.search-box form {
@@ -349,9 +346,7 @@ div.search-box  .ui-input-search.ui-shadow-inset {
 
 /*The search view list*/
 div.search-box ul {
-  position: absolute;
-  right:0;left:0;
-  z-index: 2;
+  margin-top: 16px;
 }
 
 .ui-listview-inset .ui-li {

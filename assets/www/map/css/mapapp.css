@@ -56,10 +56,6 @@
   background: #c2e4d2;
 }
 
-.map-content-container {
-    margin-top: 48px;
-}
-
 #page-map, #map-content, #map_canvas {
   width: 100%;
   height: 100%;
@@ -247,19 +243,14 @@ a {
 div.search-box .cancel-filter-button {
   position: absolute;
   right: 0px;
-  top: 6px;
+  top: 5px;
   display: none;
   height: 28px;
   line-height: 12px;
-  z-index: 2;
-}
-
-div.search-box form {
-    margin: 0;
 }
 
 div.search-box form.tight {
-  margin: 0 80px 0 0;
+  margin-right: 80px;
 }
 
 input[type="search"]::-webkit-search-cancel-button {
@@ -279,6 +270,6 @@ div.noresults {
 }
 
 #menupopup-popup.ui-popup-active {
-  top: 0 !important;
+  top: -3px !important;
 }
 
