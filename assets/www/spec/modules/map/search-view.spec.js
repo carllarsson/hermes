@@ -230,7 +230,7 @@ describe('Search view', function () {
       expect(searchView.filterSearch("Södra hus en - Hus A", "Södra husen - Hus A")).toBeFalsy();
       expect(searchView.filterSearch("Södra  husen - Hus A", "Södra husen - Hus A")).toBeFalsy();
       expect(searchView.filterSearch(" Södra hus en - Hus A", "Södra husen - Hus A")).toBeFalsy();
-      expect(searchView.filterSearch(" Södra hus en - Hus A ", "Södra husen - Hus A")).toBeFalsy();
+      expect(searchView.filterSearch("Södra husen - Hus A ", "Södra husen - Hus A")).toBeFalsy();
     });
 
     it('should populate filter with sorted departments', function(){
