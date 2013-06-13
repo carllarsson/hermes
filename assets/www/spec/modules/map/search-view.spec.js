@@ -217,6 +217,22 @@ describe('Search view', function () {
       expect(searchView.filterSearch("Södra husen - Hus A", "södra husen - hus a")).toBeFalsy();
     });
 
+    it('should match without spaces', function () {
+      var searchView = new SearchView({ collection: new Backbone.Collection(), placeholderSuffix: "" });
+
+      expect(searchView.filterSearch("Södrahusen-HusA", "Södra husen - Hus A")).toBeFalsy();
+    });
+
+    it('should match with spaces in the search words', function () {
+      var searchView = new SearchView({ collection: new Backbone.Collection(), placeholderSuffix: "" });
+
+      expect(searchView.filterSearch("Sö dra husen - Hus A", "Södra husen - Hus A")).toBeFalsy();
+      expect(searchView.filterSearch("Södra hus en - Hus A", "Södra husen - Hus A")).toBeFalsy();
+      expect(searchView.filterSearch("Södra  husen - Hus A", "Södra husen - Hus A")).toBeFalsy();
+      expect(searchView.filterSearch(" Södra hus en - Hus A", "Södra husen - Hus A")).toBeFalsy();
+      expect(searchView.filterSearch(" Södra hus en - Hus A ", "Södra husen - Hus A")).toBeFalsy();
+    });
+
     it('should populate filter with sorted departments', function(){
       var appView = new AppView({el: $('#page-map'), model: new AppModel});
 
