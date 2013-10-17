@@ -88,18 +88,12 @@ suApp.view.StudentView = Backbone.View.extend({
                       '</div>      </span></span></a>                </div>'
 
     var url = $(e.target).parent('a').attr('href');
-    var inAppBrowser = window.open(url, '_blank', 'location=yes');
+    var inAppBrowser = window.open('indexInApp.html', '_blank', 'location=yes');
     inAppBrowser.addEventListener('loadstop', function() {
-      inAppBrowser.insertCSS({file: "assets/www/studentservice/js/views/test.css"}, function(callback) {
-        alert("Callback: " + callback);
-      });
-      //inAppBrowser.executeScript({code: "$('.head').html('"+ testHeader +"')"});
+      inAppBrowser.insertCSS({file: "test1.css"});
+//      inAppBrowser.executeScript({code: "$('.head').html('"+ testHeader +"')"});
     });
     
-//    inAppBrowser.addEventListener('loadstart', function() {
-//      inAppBrowser.executeSript({code: ".head {display:none}"});
-//    });
-
     return false;    
   },
 
