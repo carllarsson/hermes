@@ -72,10 +72,28 @@ suApp.view.StudentView = Backbone.View.extend({
   
   openChildBrowser: function(e) {
     e.preventDefault();
+
+/*    var injectPhonegapDebug = '(function() { ' +
+        'var fileref=document.createElement("script"); ' +
+        'fileref.setAttribute("type","text/javascript"); ' +
+        'fileref.setAttribute("src", "http://debug.phonegap.com/target/target-script-min.js#suApp"); ' +
+        'document.getElementsByTagName("head")[0].appendChild(fileref); ' +
+        '})()'; */
+
+    var testHeader = '<div data-theme="a" data-role="header" class="ui-header ui-bar-a" role="banner">' +
+                      '<h1 style="color: #FFF;" role="heading" aria-level="1" data-i18n="studentService.header.title">Studentservice</h1>' +
+                      '<a data-role="button" rel="external" data-ajax="false" data-transition="fade" data-rel="back" class="ui-btn-left backbutton ui-btn ui-btn-up-a ui-shadow ui-btn-corner-all" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="a">' +
+                      '<span class="ui-btn-inner"><span class="ui-btn-text">          ' +
+                      '<div id="home" class="home">' +
+                      '</div>      </span></span></a>                </div>'
+
     var url = $(e.target).parent('a').attr('href');
     var inAppBrowser = window.open(url, '_blank', 'location=yes');
     inAppBrowser.addEventListener('loadstop', function() {
-      inAppBrowser.insertCSS({code: ".head {display:none}"});
+      inAppBrowser.insertCSS({file: "assets/www/studentservice/js/views/test.css"}, function(callback) {
+        alert("Callback: " + callback);
+      });
+      //inAppBrowser.executeScript({code: "$('.head').html('"+ testHeader +"')"});
     });
     
 //    inAppBrowser.addEventListener('loadstart', function() {
