@@ -94,6 +94,7 @@
   <!-- TODO: Add globalization to the feature list, as soon as phongap supports it: http://build.phonegap.com/docs/config-xml -->
 
   <gap:plugin name="com.adobe.plugins.gaplugin"/>
+  <plugin name="InAppBrowser" value="CDVInAppBrowser" />
 
   <!-- icons -->
   <icon src="icon.png"/>

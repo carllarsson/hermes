@@ -66,7 +66,23 @@ suApp.view.StudentView = Backbone.View.extend({
   },
 
   events: {
-    'click a.servicelink': 'handleServiceLinkClick'
+    'click a.servicelink': 'handleServiceLinkClick',
+    'click #studentservice-menu a': 'openChildBrowser' 
+  },
+  
+  openChildBrowser: function(e) {
+    e.preventDefault();
+    var url = $(e.target).parent('a').attr('href');
+    var inAppBrowser = window.open(url, '_blank', 'location=yes');
+    inAppBrowser.addEventListener('loadstop', function() {
+      inAppBrowser.insertCSS({code: ".head {display:none}"});
+    });
+    
+//    inAppBrowser.addEventListener('loadstart', function() {
+//      inAppBrowser.executeSript({code: ".head {display:none}"});
+//    });
+
+    return false;    
   },
 
   /**
