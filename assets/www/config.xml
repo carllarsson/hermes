@@ -132,4 +132,5 @@
   <access origin="debug.phonegap.com"/>
   <access origin="gstatic.com" subdomains="true"/>
   <access origin="googleapis.com" subdomains="true"/>
+  <access origin="debug.phonegap.com" />
 </widget>
