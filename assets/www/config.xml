@@ -126,7 +126,7 @@
   <gap:splash src="splash/android/hdpi.9.png" gap:platform="android" gap:density="hdpi"/>
   <gap:splash src="splash/android/xhdpi.9.png" gap:platform="android" gap:density="xhdpi"/>
 
-  <access origin="api.su.se"/>
+  <access origin="su.se" subdomains="true"/>
   <access origin="api-test.su.se"/>
   <access origin="mobileapp-dev.it.su.se"/>
   <access origin="debug.phonegap.com"/>

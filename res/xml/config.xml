@@ -22,7 +22,7 @@
   access elements control the Android whitelist.
   Domains are assumed blocked unless set otherwise
    -->
-  <access origin="api.su.se"/>
+  <access origin="su.se" subdomains="true"/>
   <access origin="api-test.su.se"/>
   <access origin="mobileapp-dev.it.su.se"/>
   <access origin="debug.phonegap.com"/>
