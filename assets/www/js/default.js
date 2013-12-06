@@ -58,8 +58,10 @@ $(document).on('pagecreate', '[data-role="page"][data-header]', function () {
   }, {
     title: $this.data('header-title') || ($(document).attr('title') || 'Titel saknas'),
     backbutton: false,
+    inAppBrowserBackButton: false,
     menubutton: false,
-    homebutton: false
+    homebutton: false,
+    inAppBrowserHomeButton: false
   });
 
   var addClass = templateData.menubutton || templateData.homebutton || templateData.backbutton ? "" : "nobuttons";

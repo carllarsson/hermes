@@ -43,10 +43,24 @@ JST['common/header'] = _.template(" \
       </a> \
     <% } %> \
 \
+    <% if (inAppBrowserBackButton) { %>\
+      <a data-role='button' rel='external' data-ajax='false' data-transition='fade' data-rel='back' \
+         class='ui-btn-left backbutton'> \
+         <div id='back' class='leftArrow'></div>\
+      </a> \
+    <% } %> \
+\
     <% if (menubutton) { %>\
       <a id='menubutton' data-role='button' \
          data-icon='grid' data-iconpos='notext' class='ui-btn-right'> \
         <span data-i18n='common.header.menu'>Menu</span> \
+      </a> \
+    <% } %> \
+\
+    <% if (inAppBrowserHomeButton) { %>\
+      <a data-role='button' rel='external' data-ajax='false' data-transition='fade' href='closeInAppBrowser.html' \
+         class='ui-btn-right backbutton' > \
+         <div id='home' class='home'></div>\
       </a> \
     <% } %> \
 \

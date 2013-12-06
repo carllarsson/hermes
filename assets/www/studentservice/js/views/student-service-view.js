@@ -30,7 +30,10 @@
  */
 
 suApp.view.StudentView = Backbone.View.extend({
+  self: null,
+  
   initialize: function () {
+    self = this;
 
     $(document).on('deviceready.appview', this.handleDeviceReady);
 
@@ -67,7 +70,7 @@ suApp.view.StudentView = Backbone.View.extend({
 
   events: {
     'click a.servicelink': 'handleServiceLinkClick',
-    'click #studentservice-menu a': 'openChildBrowser' 
+    'click #studentservice-menu a': 'openChildBrowser'
   },
   
   openChildBrowser: function(e) {
@@ -88,14 +91,37 @@ suApp.view.StudentView = Backbone.View.extend({
                       '</div>      </span></span></a>                </div>'
 
     var url = $(e.target).parent('a').attr('href');
-    var inAppBrowser = window.open('indexInApp.html', '_blank', 'location=yes');
-    inAppBrowser.addEventListener('loadstop', function() {
-      inAppBrowser.insertCSS({file: "test1.css"});
-//      inAppBrowser.executeScript({code: "$('.head').html('"+ testHeader +"')"});
+    this.inAppBrowser = window.open('in-app-browser.html', '_blank', 'location=no');
+    this.inAppBrowser.addEventListener('loadstop', function() {
+      this.inAppBrowser.insertCSS({file: "test1.css"}, function() {
+        console.log("Styles Altered");
+      });
+//      inAppBrowser.insertCSS({code: "#startLinkId {display: none;}"}, function() {
+//        alert("Styles Altered");
+//      });
+      this.inAppBrowser.executeScript({code: "setTimeout(function() { $('.head-left').css('display', 'none'); alert('finished'); }, 5000);"});
     });
+    
+    // Closing inAppBrowser when going a specific url, since we can't close the inAppBrowser 
+    // from inside itself (security feature in inAppBrowser)
+    this.inAppBrowser.addEventListener('loadstart', this.iabLoadStop);
+    // Removing listeners after closing inAppBrowser
+    this.inAppBrowser.addEventListener('exit', this.iabClose);
     
     return false;    
   },
+  
+  iabLoadStop: function(event) {
+    if(event.url.indexOf("closeInAppBrowser.html") != -1){
+      self.inAppBrowser.close();
+    }
+  },
+  
+  iabClose: function(event) {
+    this.inAppBrowser.removeEventListener('loadstart', iabLoadStop);
+    this.inAppBrowser.removeEventListener('exit', iabClose); 
+  },
+  
 
   /**
    * Remove handler for the view.

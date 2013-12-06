@@ -251,6 +251,31 @@ http://stackoverflow.com/questions/12847081/jquery-mobile-icons-white-instead-bl
   border-top: 1px solid #a4b2bd;
 }
 
+
+/** Left Arrow **/
+.leftArrow {
+    height: 0px;
+    width: 0px;
+    border-width: 16px;
+    border-style: solid;
+    border-color: transparent #333 transparent transparent;
+    position: absolute;
+    right: 16px;
+    top: 0;
+    color: white;
+}
+
+.leftArrow:after {
+    content: '';
+    width: 16px;
+    height: 12px;
+    background-color: white;
+    position: absolute;
+    top: -6px;
+    left: 16px;
+}
+
+
 /** Home icon**/
 .home:before,
 .home:after,
