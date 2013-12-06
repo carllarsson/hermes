@@ -63,6 +63,8 @@ suApp.view.StartView = Backbone.View.extend({
    * Handle click on sisu link.
    */
   handleSISULinkClick: function (event) {
+    // Translated url to redirect the user to the SISU page with corresponding language.
+    $('#sisulink').attr('href', i18n.t("start.sisu.link"));
     gaPlugin.trackPage(null, null, $(event.currentTarget).attr("href"));
   }
 });

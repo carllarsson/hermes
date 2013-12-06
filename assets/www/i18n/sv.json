@@ -85,7 +85,9 @@
       "sukatSearch": "Personal",
       "courses": "Kurser & Program",
       "studentService": "Studentservice",
-      "accessibility": "Symboler"
+      "accessibility": "Symboler",
+      "sisu": "Kurser & Program",
+      "schedule": "Schema"
     },
     "header": {
       "title": "Stockholms universitet"

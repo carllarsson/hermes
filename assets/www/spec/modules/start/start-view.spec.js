@@ -59,7 +59,7 @@ describe('Start view', function () {
 
       $('#sisulink').trigger('click');
 
-      expect(window.plugins.gaPlugin.trackPage).toHaveBeenCalledWith(null, null, 'http://sisu.it.su.se');
+      expect(window.plugins.gaPlugin.trackPage).toHaveBeenCalledWith(null, null, 'start.sisu.link');
     });
   });
 
