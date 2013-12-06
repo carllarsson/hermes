@@ -75,51 +75,10 @@ suApp.view.StudentView = Backbone.View.extend({
   
   openChildBrowser: function(e) {
     e.preventDefault();
+    var url = $(e.target).closest('a').attr('href');
+    inAppBrowser.open(url);
 
-/*    var injectPhonegapDebug = '(function() { ' +
-        'var fileref=document.createElement("script"); ' +
-        'fileref.setAttribute("type","text/javascript"); ' +
-        'fileref.setAttribute("src", "http://debug.phonegap.com/target/target-script-min.js#suApp"); ' +
-        'document.getElementsByTagName("head")[0].appendChild(fileref); ' +
-        '})()'; */
-
-    var testHeader = '<div data-theme="a" data-role="header" class="ui-header ui-bar-a" role="banner">' +
-                      '<h1 style="color: #FFF;" role="heading" aria-level="1" data-i18n="studentService.header.title">Studentservice</h1>' +
-                      '<a data-role="button" rel="external" data-ajax="false" data-transition="fade" data-rel="back" class="ui-btn-left backbutton ui-btn ui-btn-up-a ui-shadow ui-btn-corner-all" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="a">' +
-                      '<span class="ui-btn-inner"><span class="ui-btn-text">          ' +
-                      '<div id="home" class="home">' +
-                      '</div>      </span></span></a>                </div>'
-
-    var url = $(e.target).parent('a').attr('href');
-    this.inAppBrowser = window.open('in-app-browser.html', '_blank', 'location=no');
-    this.inAppBrowser.addEventListener('loadstop', function() {
-      this.inAppBrowser.insertCSS({file: "test1.css"}, function() {
-        console.log("Styles Altered");
-      });
-//      inAppBrowser.insertCSS({code: "#startLinkId {display: none;}"}, function() {
-//        alert("Styles Altered");
-//      });
-      this.inAppBrowser.executeScript({code: "setTimeout(function() { $('.head-left').css('display', 'none'); alert('finished'); }, 5000);"});
-    });
-    
-    // Closing inAppBrowser when going a specific url, since we can't close the inAppBrowser 
-    // from inside itself (security feature in inAppBrowser)
-    this.inAppBrowser.addEventListener('loadstart', this.iabLoadStop);
-    // Removing listeners after closing inAppBrowser
-    this.inAppBrowser.addEventListener('exit', this.iabClose);
-    
     return false;    
-  },
-  
-  iabLoadStop: function(event) {
-    if(event.url.indexOf("closeInAppBrowser.html") != -1){
-      self.inAppBrowser.close();
-    }
-  },
-  
-  iabClose: function(event) {
-    this.inAppBrowser.removeEventListener('loadstart', iabLoadStop);
-    this.inAppBrowser.removeEventListener('exit', iabClose); 
   },
   
 

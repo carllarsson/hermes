@@ -33,55 +33,37 @@
 <html>
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="content-type">
-  <title>Studentservice</title>
+  <title>In App Browser</title>
 
-  <link rel="stylesheet" href="../css/lib/jquery.mobile-1.3.1.min.css"/>
-  <link rel="stylesheet" href="../css/SU-ThemeA-B.css"/>
-  <link rel="stylesheet" href="../css/SU-beta.css"/>
-
-  <script type="text/javascript" charset="utf-8" src="../cordova-2.9.0.js"></script>
-  <script type="text/javascript" charset="utf-8" src="../GAPlugin.js"></script>
-
-  <script src="../js/lib/jquery-1.8.2.min.js"></script>
-  <script src="../js/lib/jquery.mobile-1.3.1.min.js"></script>
+  <link rel="stylesheet" href="css/lib/jquery.mobile-1.3.1.min.css"/>
+  <link rel="stylesheet" href="css/SU-ThemeA-B.css"/>
+  <link rel="stylesheet" href="css/SU-beta.css"/>
 
   <!-- maximum scale added to stop zoom on select controls -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+
+  <script src="js/lib/jquery-1.8.2.min.js"></script>
+  <script src="js/lib/jquery.mobile-1.3.1.min.js"></script>
+
+  <script src="js/lib/underscore-1.4.4-min.js"></script>
+  <script src="js/lib/backbone-1.0.0-min.js"></script>
+
+  <!-- Default javascripts -->
+  <script src="js/default.js"></script>
+  <script src="js/jst/common.js"></script>
+  <script src="js/lib/i18next-1.6.2.min.js"></script>
+  <script src="js/locale.js"></script>
+  
 </head>
 <body>
 
-<script src="../js/lib/fastclick/fastclick.min.js"></script>
-<script src="../js/lib/underscore-1.4.4-min.js"></script>
-<script src="../js/lib/backbone-1.0.0-min.js"></script>
-
-<!-- Global config file -->
-<script src="../js/config.js"></script>
-
-<!-- Default javascripts -->
-<script src="../js/default.js"></script>
-<script src="../js/jst/common.js"></script>
-<script src="../js/lib/i18next-1.6.2.min.js"></script>
-<script src="../js/locale.js"></script>
-<script src="js/jst/menu.js"></script>
-<script src="../js/in-app-browser.js"></script>
-<script src="js/views/student-service-view.js"></script>
-
-
-<div id="studentservice_page" class="studentservice-page" data-role="page" data-header="common/header"
-     data-header-options="backbutton"
+<div id="inappbrowser_page" data-role="page" data-header="common/header"
+     data-header-options="backbutton inAppBrowserHomeButton"
      data-prefetch>
-  <div id="studentservice_view" data-role="content">
-    <ul data-role="listview" data-inset="true" class="studentservice-list" id="studentservice-menu"></ul>
-  </div>
+     
+  <iframe id="frame2" src="#" style="width:100%; height:400px" frameBorder="0" seamless></iframe>
 </div>
-
-
-<script type="text/javascript">
-  $(document).ready(function () {
-    var studentView = new suApp.view.StudentView({ el: $('#studentservice_page') });
-    studentView.render();
-  });
-</script>
 
 </body>
 </html>

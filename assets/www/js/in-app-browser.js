@@ -29,48 +29,42 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-suApp.view.StartView = Backbone.View.extend({
+var inAppBrowser = (function() {
+  var inAppBrowser;
   
-  initialize: function () {
-    $(document).on('deviceready.appview', this.handleDeviceReady);
-
-    initLocale();
-    $('div[data-role="header"] > h1').attr('data-i18n', 'start.header.title');
-    this.$el.i18n();
-    
-    this.setSisuLink();
-  },
-
-  events: {
-    'click #schedule-link, #sisulink': 'openInAppBrowser'
-  },
-
-  setSisuLink: function (event) {
-    // Translated url to redirect the user to the SISU page with corresponding language.
-    $('#sisulink').attr('href', i18n.t("start.sisu.link"));
-  },
-
-  /**
-   * Remove handler for the view.
-   */
-  remove: function () {
-    $(document).off('.appview');
-
-    Backbone.View.prototype.remove.call(this);
-  },
-
-  /**
-   * Handles the device ready event.
-   */
-  handleDeviceReady: function () {
-    window.setTimeout(navigator.splashscreen.hide, suApp.config.core.splashscreen.timeout);
-    gaPlugin.trackPage(null, null, "index.html");
-  },
+  return {
+    open: function(url) {
+      inAppBrowser = window.open('in-app-browser.html', '_blank', 'location=no');
+      
+      inAppBrowser.addEventListener('loadstart', function() {
+        gaPlugin.trackPage(null, null, url);
   
-  openInAppBrowser: function(evt) {
-    var url = $(evt.target).closest('a').attr('href');
-    inAppBrowser.open(url);
+        inAppBrowser.executeScript({
+          code: "$('#frame2').attr('src', '" + url + "');"
+        });
+      });
+      
+      // Closing inAppBrowser when going a specific url, since we can't close the inAppBrowser 
+      // from inside itself (security feature in inAppBrowser)
+      inAppBrowser.addEventListener('loadstart', this.loadStop);
+      // Removing listeners after closing inAppBrowser
+      inAppBrowser.addEventListener('exit', this.close);
+  
+      
+      return false;
+    },
     
-    return false;
-  }  
-});
+    loadStop: function(event) {
+      if(event.url.indexOf("closeInAppBrowser.html") != -1){
+        inAppBrowser.close();
+      }
+    },
+    
+    close: function(event) {
+      inAppBrowser.removeEventListener('loadstart', loadStop);
+      inAppBrowser.removeEventListener('exit', close); 
+      inAppBrowser = null; // Closing
+    }
+  };
+}());
+
