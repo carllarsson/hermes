@@ -736,3 +736,63 @@ div.search-box .ui-btn-hover-b .ui-last-child {
 .organization-information .top-info {
   margin-bottom: 20px;
 }
+
+/* In app browser header styling for buttons */
+.browser-back-icon:before,
+.browser-back-icon:after,
+.browser-back-icon:hover:before,
+.browser-back-icon:focus:before,
+.browser-back-icon:active:before,
+.browser-back-icon:hover:after,
+.browser-back-icon:focus:after,
+.browser-back-icon:active:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin: -8px 0 0;
+  background: red;
+}
+
+.browser-back-icon:before,
+.browser-back-icon:hover:before,
+.browser-back-icon:focus:before,
+.browser-back-icon:active:before {
+  left: -8px;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 12px 10px;
+  border-bottom-color: #FFF;
+  margin-top: -12px;
+  background: transparent;
+  transform:rotate(-90deg);
+  -ms-transform:rotate(-90deg); /* IE 9 */
+  -webkit-transform:rotate(-90deg); /* Safari and Chrome */
+}
+
+.browser-back-icon:after,
+.browser-back-icon:hover:after,
+.browser-back-icon:focus:after,
+.browser-back-icon:active:after {
+  display: none;
+}
+
+.backbutton.browser-back,
+.ui-header .ui-btn-left.backbutton.browser-back {
+  height: 32px;
+  width: 36px;
+  border-radius: 0.6em;
+}
+
+.ui-header .ui-btn-left.backbutton.browser-back {
+  margin-left: 0;
+}
+
+.backbutton.browser-back:before {
+  display: none;
+}
+
+.backbutton.browser-back .ui-btn-inner {
+  padding-right: 10px;
+  padding-left: 9px;
+}

@@ -45,8 +45,8 @@ JST['common/header'] = _.template(" \
 \
     <% if (inAppBrowserBackButton) { %>\
       <a data-role='button' rel='external' data-ajax='false' data-transition='fade' data-rel='back' \
-         class='ui-btn-left backbutton'> \
-         <div id='back' class='leftArrow'></div>\
+         class='ui-btn-left backbutton browser-back'> \
+         <div id='home' class='browser-back-icon'></div>\
       </a> \
     <% } %> \
 \
@@ -59,7 +59,7 @@ JST['common/header'] = _.template(" \
 \
     <% if (inAppBrowserHomeButton) { %>\
       <a data-role='button' rel='external' data-ajax='false' data-transition='fade' href='closeInAppBrowser.html' \
-         class='ui-btn-right backbutton' > \
+         class='ui-btn-right backbutton browser-back' > \
          <div id='home' class='home'></div>\
       </a> \
     <% } %> \
